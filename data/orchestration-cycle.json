@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-06T22:36:09.148Z",
+  "generatedAt": "2026-08-06T22:38:55.546Z",
   "dryRun": false,
   "fetchedPosts": 10,
   "manualPosts": [],
@@ -60,27 +60,30 @@
   "contentDrafts": [
     {
       "format": "text",
-      "text": "Tension: low nominal fees on a chain don’t equal good UX for real users. Tron’s cheap transactions are a marketing lever — but they hide three operational trade-offs teams keep ignoring. Non-obvious claim: if you’re building wallets or onboarding users on Tron, the single thing that predicts retention is not TRX price or block time; it’s how you handle resource provisioning (bandwidth/energy) + relay UX + liquidity access. Solve that triad and the rest is polish. Mechanism checklist…",
+      "text": "Tension: TRON looks like a throughput winner until you ask how it actually pays for that throughput. The interesting part isn’t the TPS claims — it’s which economic levers the chain uses to subsidize activity, and how that creates predictable failure modes. Mechanism-first take (short): TRON runs on three levers that matter to builders and traders — (1) resource leasing via freezing TRX (bandwidth & energy), (2) SR election + block rewards (vote-driven validator economics), and (3) liquidity…",
       "pollOptions": [
-        "Resource provisioning (bandwidth/energy) is my blocker",
-        "Relayer/meta-tx architecture / UX",
-        "Lack of on-chain liquidity / bridge pain",
-        "Docs/tooling & debugging experience"
+        "Run the resource-sensitivity test (freeze vs not)",
+        "Map SR vote concentration",
+        "Probe TRC20 liquidity slippage",
+        "Send me all three scripts"
       ],
-      "imagePrompt": "Minimalist technical diagram: three stacked blocks labeled Consensus (DPoS • Super Representatives), Resource Model (Bandwidth/Energy • freeze TRX), Liquidity (Pools & Bridges). Include a compact flow arrow showing: User signs intent -> Relayer tops up energy -> Tx submitted. Tron logo subtly placed. Color scheme: muted tech blues and grays, clear sans-serif labels, vector style, no people.",
-      "rationale": "Started with a tension and non-obvious claim to cut through marketing noise. Focused on mechanisms (resource model, relayer, liquidity) that materially affect wallet retention and are testable. Included a practical relayer pattern and specific metrics so builders can run experiments rather than argue about fees. Poll invites concrete diagnosis from operators. Image prompt supports the mechanism-first diagram and is actionable for a designer. Avoided hype, numbers, or fabricated claims; separated interpretive advice from factual bits about Tron’s consensus and resource model.",
+      "imagePrompt": "Minimal infographic for a technical crypto audience: central diagram showing three labeled levers — 'Freeze → Bandwidth/Energy', 'SR Votes → Validator Economics', 'TRC20 Liquidity → UX/Slippage' — with arrows between them showing interactions. Include small icons: a frozen coin for Freeze, a gear or node cluster for SR votes, and stacked coins/liquidity pool for TRC20. Add a small laptop with terminal lines and a stopwatch to imply quick tests. Flat colors, high contrast, clean sans-serif labels, 1200x675 px.",
+      "rationale": "Packed a mechanism-first thread that opens with a tension, lists concrete, measurable experiments, and separates evidence from interpretation. The post avoids fabricated numbers and financial promises, gives testable predictions, and ends with a clear reason to follow (code/scripts). Poll invites a concrete choice about which experiment to run; image prompt matches the analytical, builder-first vibe.",
       "policy": {
         "passed": true,
         "hardViolations": [],
-        "reviewFlags": [
-          "financial_claim"
-        ],
-        "requiresReview": true
+        "reviewFlags": [],
+        "requiresReview": false
       },
-      "publishable": false
+      "publishable": true
     }
   ],
-  "actions": [],
+  "actions": [
+    {
+      "type": "text",
+      "id": "17908944711449785"
+    }
+  ],
   "feedback": {
     "events": [
       {
