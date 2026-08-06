@@ -40,4 +40,10 @@ The verified token can read the account profile and own threads. A live
 so public conversation discovery needs a follow-up OAuth authorization that
 explicitly includes `threads_keyword_search`.
 
+Meta's current dashboard then blocks adding this permission to App Review until
+the business becomes a **Tech Provider** and completes access verification.
+This is a separate business/data-handling review, not a token-generation
+checkbox. The bot therefore stays in own-profile read-only mode until that
+review path is intentionally started.
+
 No app secret or access token belongs in this repository.

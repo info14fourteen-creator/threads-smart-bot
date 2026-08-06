@@ -40,11 +40,12 @@ database, OpenAI Responses API, and official Threads OAuth/API calls.
 - Read-only Threads client, deterministic policy scoring, deduplication, and
   private OpenAI classification are implemented in `src/`.
 - Own-profile scan is verified against live Threads data and the new OpenAI
-  key. Public keyword search is implemented but requires re-authorization of
-  the current token with `threads_keyword_search`.
-- Next implementation step: complete OAuth re-authorization, then add
-  persistence, scheduled ingestion, and a review queue UI; publishing stays
-  behind the policy gate.
+  key. Public keyword search is implemented but the current token lacks
+  `threads_keyword_search`.
+- Meta currently requires Tech Provider status and access verification before
+  adding that permission to App Review. Next implementation step inside the
+  currently available access is persistence, scheduled own-profile ingestion,
+  and a review queue UI; publishing stays behind the policy gate.
 
 ### Phase 0 — repository and safety foundation
 
