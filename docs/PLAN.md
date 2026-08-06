@@ -42,12 +42,16 @@ database, OpenAI Responses API, and official Threads OAuth/API calls.
 - Own-profile scan is verified against live Threads data and the replacement
   OpenAI key. The dry-run orchestrator now detects manual posts, reads replies,
   creates a five-slot daily content plan, drafts replies/content, and persists
-  idempotency state. Public keyword search is implemented but the current token
-  lacks `threads_keyword_search`.
+  idempotency state. A local SQLite feedback store now keeps manual posts,
+  manual replies, incoming comments, bot replies, and versioned tuning
+  proposals. Public keyword search is implemented but the current token lacks
+  `threads_keyword_search`.
 - Meta currently requires Tech Provider status and access verification before
   adding that permission to App Review. The next implementation step inside
   the currently available access is a public image-asset pipeline and guarded
-  live publishing; write actions remain untested and behind the policy gate.
+  live publishing; write actions remain behind the policy gate. The next step
+  is collecting timed Insights snapshots and applying only repeated,
+  high-confidence profile proposals with rollback.
 
 ### Phase 0 — repository and safety foundation
 

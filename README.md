@@ -2,6 +2,9 @@
 
 Autonomous Threads content intelligence and publishing agent for 4TEEN.
 
+Requires Node.js 22.5+ because the feedback store uses the built-in SQLite
+runtime. The database file is local and ignored by Git.
+
 The first objective is not automated engagement. The bot should learn and apply
 Stan's content preferences: identify posts that are worth reading, explain why,
 place them into a review queue, and use the approved signal to improve future
@@ -82,3 +85,22 @@ AI calls.
 A manually published post is never deleted or immediately duplicated. The
 agent keeps strong posts as learning signals and drafts a distinct follow-up
 for weak but non-blocked posts.
+
+## Feedback and AI tuning
+
+Every orchestration cycle stores manual posts, manual replies, incoming
+comments, and bot replies in `data/feedback.sqlite`. Inspect the collected
+examples with:
+
+```bash
+npm run feedback
+```
+
+Generate a versioned AI tuning proposal without changing the live profile:
+
+```bash
+npm run learn
+```
+
+Proposals are stored in SQLite with status `proposed`. Hard exclusions and
+publishing safety rules are never changed by the analyst automatically.

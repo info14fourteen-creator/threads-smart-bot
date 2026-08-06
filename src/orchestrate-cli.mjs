@@ -33,6 +33,8 @@ try {
     maxReplies: Math.min(20, Math.max(0, Number(args["max-replies"] ?? 10))),
     date: args.date,
     publishSlot: args.slot,
+    feedbackPath: args.feedback || "data/feedback.sqlite",
+    collectFeedback: args.feedback !== "false",
   });
   const outputPath = args.out || "data/orchestration-cycle.json";
   await mkdir(outputPath.split("/").slice(0, -1).join("/") || ".", { recursive: true });

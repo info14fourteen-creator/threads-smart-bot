@@ -1,8 +1,9 @@
 import { buildDecisionQueue } from "./agent.mjs";
 import { buildDailyContentPlan, shouldUseManualFollowUp } from "./content-plan.mjs";
-import { generateContentDraft, generateManualFollowUp, generateReplyDraft } from "./writer.mjs";
+import { generateContentDraft, generateManualFollowUp, generateReplyDraft, detectLanguage } from "./writer.mjs";
 import { dedupePosts } from "./policy.mjs";
 import { loadState, remember, saveState } from "./state-store.mjs";
+import { FeedbackStore } from "./feedback-store.mjs";
 
 function isNew(id, seen) {
   return Boolean(id) && !seen.has(id);
@@ -24,16 +25,31 @@ export async function runCycle({
   maxReplies = 10,
   date,
   publishSlot,
+  feedbackPath = "data/feedback.sqlite",
+  collectFeedback = true,
   fetchImpl = fetch,
 } = {}) {
   if (live && draftContent && !publishSlot) {
     throw new Error("Live content publishing requires --slot=morning|midday|afternoon|evening|late_evening");
   }
   const state = await loadState(statePath);
+  const feedbackStore = collectFeedback ? new FeedbackStore(feedbackPath) : null;
   const posts = dedupePosts(await client.listMyThreads({ limit: postLimit, maxItems: postLimit }));
   const firstRun = !state.initialized;
   const seenPosts = new Set(state.seenPostIds);
   const botPosts = new Set(state.botPostIds);
+  for (const post of posts) {
+    feedbackStore?.recordEvent({
+      eventType: botPosts.has(post.id) ? "bot_post" : "manual_post",
+      sourceId: post.id,
+      username: post.username,
+      language: detectLanguage(post.text),
+      text: post.text,
+      createdAt: post.timestamp,
+      isBot: botPosts.has(post.id),
+      metadata: { permalink: post.permalink, format: post.media_type || null },
+    });
+  }
   const manualPosts = firstRun ? [] : posts.filter((post) => isNew(post.id, seenPosts) && !botPosts.has(post.id));
   const manualDecisions = useAi ? await buildDecisionQueue(manualPosts, { profile, runtime, useAi, fetchImpl }) : [];
   const manualFollowUps = [];
@@ -59,8 +75,21 @@ export async function runCycle({
   for (const post of posts.filter((item) => item.has_replies && item.id)) {
     if (replyCandidates.length >= maxReplies) break;
     try {
-      const replies = await client.listThreadReplies(post.id, { maxItems: maxReplies });
+      const replies = await client.listThreadReplies(post.id, { maxItems: Math.max(100, maxReplies) });
       for (const reply of replies) {
+        const isOwnReply = reply.username === runtime.threadsUsername;
+        const isBotReply = isOwnReply && botPosts.has(reply.id);
+        feedbackStore?.recordEvent({
+          eventType: isBotReply ? "bot_reply" : isOwnReply ? "manual_reply" : "incoming_reply",
+          sourceId: reply.id,
+          parentId: post.id,
+          username: reply.username,
+          language: detectLanguage(reply.text),
+          text: reply.text,
+          createdAt: reply.timestamp,
+          isBot: isBotReply,
+          metadata: { postPermalink: post.permalink },
+        });
         if (!isNew(reply.id, seenReplies) || reply.username === runtime.threadsUsername) continue;
         if (reply.username && (repliedUsersToday.has(reply.username) || pendingReplyUsers.has(reply.username))) continue;
         if (replyCandidates.length >= maxReplies) break;
@@ -119,6 +148,8 @@ export async function runCycle({
   state.initialized = true;
   state.lastRunAt = new Date().toISOString();
   await saveState(statePath, state);
+  const feedbackSummary = feedbackStore ? feedbackStore.summary() : null;
+  feedbackStore?.close();
 
   return {
     generatedAt: state.lastRunAt,
@@ -132,5 +163,6 @@ export async function runCycle({
     contentPlan,
     contentDrafts,
     actions,
+    feedback: feedbackSummary,
   };
 }
