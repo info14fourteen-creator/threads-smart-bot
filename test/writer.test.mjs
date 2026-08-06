@@ -35,3 +35,13 @@ test("reply writer can refuse a weak comment", async () => {
   });
   assert.equal(result.action, "skip");
 });
+
+test("content writer fits drafts to the Threads text limit", async () => {
+  const result = await generateContentDraft({
+    slot: { format: "text", slot: "morning", objective: "mechanism_insight" },
+    profile,
+    runtime,
+    fetchImpl: async () => new Response(JSON.stringify({ output_text: JSON.stringify({ text: "word ".repeat(200), poll_options: [], image_prompt: "", rationale: "" }) }), { status: 200 }),
+  });
+  assert.ok(result.text.length <= 500);
+});

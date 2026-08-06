@@ -1,5 +1,11 @@
 import { checkPolicy, normalizeText } from "./policy.mjs";
 
+function fitThreadsText(value, max = 500) {
+  const text = normalizeText(value || "");
+  if (text.length <= max) return text;
+  return `${text.slice(0, max - 1).replace(/\s+\S*$/, "").trim()}…`;
+}
+
 function extractResponseText(payload) {
   if (typeof payload?.output_text === "string" && payload.output_text.trim()) return payload.output_text.trim();
   for (const item of payload?.output || []) {
@@ -51,15 +57,16 @@ export async function generateContentDraft({ slot, profile, runtime, fetchImpl =
     ].join("\n"),
     input: { slot, topics: profile.topic_weights, voice: profile.voice, quality_rules: profile.post_quality_rules },
   });
-  const policy = checkPolicy(draft.text || "");
+  const text = fitThreadsText(draft.text);
+  const policy = checkPolicy(text);
   return {
     format: slot.format,
-    text: normalizeText(draft.text || ""),
+    text,
     pollOptions: Array.isArray(draft.poll_options) ? draft.poll_options.map(normalizeText).filter(Boolean).slice(0, 4) : [],
     imagePrompt: normalizeText(draft.image_prompt || ""),
     rationale: normalizeText(draft.rationale || ""),
     policy,
-    publishable: policy.passed && !policy.requiresReview && Boolean(draft.text),
+    publishable: policy.passed && !policy.requiresReview && Boolean(text),
   };
 }
 
@@ -76,9 +83,10 @@ export async function generateReplyDraft({ post, reply, profile, runtime, fetchI
     ].join("\n"),
     input: { post: { text: post.text, username: post.username }, comment: { text: reply.text, username: reply.username } },
   });
-  const policy = checkPolicy(draft.text || "");
+  const text = fitThreadsText(draft.text);
+  const policy = checkPolicy(text);
   const action = policy.hardViolations.length ? "skip" : ["reply", "skip", "needs_review"].includes(draft.action) ? draft.action : "needs_review";
-  return { action, text: normalizeText(draft.text || ""), reason: normalizeText(draft.reason || ""), policy };
+  return { action, text, reason: normalizeText(draft.reason || ""), policy };
 }
 
 export async function generateManualFollowUp({ post, profile, runtime, fetchImpl = fetch }) {
@@ -93,7 +101,8 @@ export async function generateManualFollowUp({ post, profile, runtime, fetchImpl
     ].join("\n"),
     input: { original_post: { text: post.text, permalink: post.permalink }, voice: profile.voice, topics: profile.topic_weights },
   });
-  const policy = checkPolicy(draft.text || "");
+  const text = fitThreadsText(draft.text);
+  const policy = checkPolicy(text);
   const action = policy.hardViolations.length ? "needs_review" : ["follow_up", "needs_review"].includes(draft.action) ? draft.action : "needs_review";
-  return { action, text: normalizeText(draft.text || ""), reason: normalizeText(draft.reason || ""), policy };
+  return { action, text, reason: normalizeText(draft.reason || ""), policy };
 }

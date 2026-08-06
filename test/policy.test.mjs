@@ -23,6 +23,10 @@ test("financial claims require review", () => {
   assert.ok(result.policy.reviewFlags.includes("financial_claim"));
 });
 
+test("long in a non-financial phrase is not a trading claim", () => {
+  assert.equal(checkPolicy("Long scripted monologues are not an eval loop.").requiresReview, false);
+});
+
 test("dedupe uses ids and normalized content hashes", () => {
   const posts = [{ id: "a", text: "One" }, { id: "a", text: "Two" }, { text: " Same  text " }, { text: "same text" }];
   assert.equal(dedupePosts(posts).length, 2);

@@ -30,7 +30,7 @@ try {
     useAi,
     draftContent: args["draft-content"] !== "false",
     live,
-    maxReplies: Math.min(20, Math.max(1, Number(args["max-replies"] || 10))),
+    maxReplies: Math.min(20, Math.max(0, Number(args["max-replies"] ?? 10))),
     date: args.date,
     publishSlot: args.slot,
   });

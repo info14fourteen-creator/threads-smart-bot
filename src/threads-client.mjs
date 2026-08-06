@@ -47,19 +47,27 @@ export class ThreadsClient {
     url.searchParams.delete("access_token");
 
     let response;
-    try {
-      response = await this.fetchImpl(url, {
-        method,
-        headers: {
-          Accept: "application/json",
-          ...(body ? { "Content-Type": "application/json" } : {}),
-          Authorization: `Bearer ${this.accessToken}`,
-        },
-        ...(body ? { body: JSON.stringify(body) } : {}),
-        signal,
-      });
-    } catch (error) {
-      throw new ThreadsApiError(`Threads API network request failed: ${error.message}`, {
+    let lastNetworkError;
+    for (let attempt = 0; attempt < 3; attempt += 1) {
+      try {
+        response = await this.fetchImpl(url, {
+          method,
+          headers: {
+            Accept: "application/json",
+            ...(body ? { "Content-Type": "application/json" } : {}),
+            Authorization: `Bearer ${this.accessToken}`,
+          },
+          ...(body ? { body: JSON.stringify(body) } : {}),
+          signal,
+        });
+        break;
+      } catch (error) {
+        lastNetworkError = error;
+        if (attempt < 2) await new Promise((resolve) => setTimeout(resolve, 250 * (attempt + 1)));
+      }
+    }
+    if (!response) {
+      throw new ThreadsApiError(`Threads API network request failed: ${lastNetworkError?.message || "unknown error"}`, {
         path: url.pathname,
       });
     }
