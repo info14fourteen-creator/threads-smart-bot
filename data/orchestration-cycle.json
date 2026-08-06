@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-08-06T22:22:36.058Z",
-  "dryRun": true,
+  "generatedAt": "2026-08-06T22:32:55.297Z",
+  "dryRun": false,
   "fetchedPosts": 10,
   "manualPosts": [],
   "manualDecisions": [],
@@ -60,28 +60,24 @@
   "contentDrafts": [
     {
       "format": "text",
-      "publishable": false,
-      "reason": "draft generation disabled"
-    },
-    {
-      "format": "question",
-      "publishable": false,
-      "reason": "draft generation disabled"
-    },
-    {
-      "format": "poll",
-      "publishable": false,
-      "reason": "draft generation disabled"
-    },
-    {
-      "format": "image",
-      "publishable": false,
-      "reason": "draft generation disabled"
-    },
-    {
-      "format": "text",
-      "publishable": false,
-      "reason": "draft generation disabled"
+      "text": "Tension: “Cheap chains” win users, but they trade away the one thing crypto pretends to sell — permissionless guarantees. If you’re building a wallet for real humans, that trade-off is the product decision that determines onboarding, legal risk, and engineering cost. Mechanism-first framework (5 tests to run on any chain before you commit): 1) Fee friction — Measure the median cost and variance of a simple user action (transfer, approve). If it’s a rounding error for your UX, you win…",
+      "pollOptions": [
+        "I prioritize lowest friction (cheap txs, centralized validators)",
+        "I prioritize maximal censorship-resistance (decentralized, high finality)",
+        "I build hybrid: cheap L2/user UX + conservative settlement L1",
+        "We abstract multi-chain away in middleware (one API for all)"
+      ],
+      "imagePrompt": "Split-screen minimalist illustration: left side shows a slick mobile wallet confirming a near-instant, low-fee transaction (green check, small coin icons); right side shows a row of nodes/validators with locks and warning icons, and a terminal window with logs indicating reorgs. Overlaid text: 'UX vs Guarantees'. Clean tech startup aesthetic, muted blue/gray palette, readable on mobile, no logos or real team photos.",
+      "rationale": "Kept the opener provocative and mechanism-first to match the requested voice: founder/operator who ships and measures. The body gives a compact, actionable 5-test framework that any wallet builder can run — each test maps directly to an operational risk or product metric. Separated observable evidence (architecture choices like delegated validators and low fees) from interpretation (what that means for product and compliance). Included a concrete 30-day experiment prediction so readers can measure rather than argue. Poll asks a real trade-off decision; image prompt supports the post visually. Avoided fabrications, absolute promises, or asking for private keys; respected exclusions on inflammatory or misleading claims.",
+      "policy": {
+        "passed": true,
+        "hardViolations": [],
+        "reviewFlags": [
+          "financial_claim"
+        ],
+        "requiresReview": true
+      },
+      "publishable": false
     }
   ],
   "actions": [],
