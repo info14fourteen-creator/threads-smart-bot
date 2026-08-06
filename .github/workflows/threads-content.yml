@@ -1,0 +1,63 @@
+name: Threads content publisher
+
+on:
+  schedule:
+    # 12:30, 17:30, 22:30 Asia/Tashkent (UTC+5).
+    - cron: "30 7 * * *"
+    - cron: "30 12 * * *"
+    - cron: "30 17 * * *"
+  workflow_dispatch:
+    inputs:
+      slot:
+        description: "Content slot to publish now"
+        required: true
+        type: choice
+        options:
+          - morning
+          - midday
+          - afternoon
+
+permissions:
+  contents: write
+
+concurrency:
+  group: threads-state
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
+      THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
+      THREADS_USERNAME: ${{ secrets.THREADS_USERNAME }}
+      OPENAI_API_KEY_OVERRIDE: ${{ secrets.OPENAI_API_KEY_OVERRIDE }}
+      OPENAI_ORG_ID: ${{ secrets.OPENAI_ORG_ID }}
+      OPENAI_MODEL: gpt-5-mini
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: npm install --ignore-scripts --no-audit --no-fund
+      - name: Resolve slot
+        id: slot
+        env:
+          EVENT_SCHEDULE: ${{ github.event.schedule }}
+          MANUAL_SLOT: ${{ inputs.slot }}
+        run: |
+          if [ -n "$MANUAL_SLOT" ]; then
+            echo "slot=$MANUAL_SLOT" >> "$GITHUB_OUTPUT"
+          elif [ "$EVENT_SCHEDULE" = "30 7 * * *" ]; then
+            echo "slot=morning" >> "$GITHUB_OUTPUT"
+          elif [ "$EVENT_SCHEDULE" = "30 12 * * *" ]; then
+            echo "slot=midday" >> "$GITHUB_OUTPUT"
+          elif [ "$EVENT_SCHEDULE" = "30 17 * * *" ]; then
+            echo "slot=afternoon" >> "$GITHUB_OUTPUT"
+          else
+            echo "Unknown schedule: $EVENT_SCHEDULE" >&2
+            exit 2
+          fi
+      - name: Publish one slot
+        run: bash scripts/ci-worker.sh content "${{ steps.slot.outputs.slot }}"
