@@ -27,6 +27,11 @@ test("long in a non-financial phrase is not a trading claim", () => {
   assert.equal(checkPolicy("Long scripted monologues are not an eval loop.").requiresReview, false);
 });
 
+test("ordinary product language containing sell is not a trading claim", () => {
+  assert.equal(checkPolicy("Crypto pretends to sell permissionless guarantees.").requiresReview, false);
+  assert.ok(checkPolicy("Sell BTC only after checking your risk limits.").reviewFlags.includes("financial_claim"));
+});
+
 test("dedupe uses ids and normalized content hashes", () => {
   const posts = [{ id: "a", text: "One" }, { id: "a", text: "Two" }, { text: " Same  text " }, { text: "same text" }];
   assert.equal(dedupePosts(posts).length, 2);
