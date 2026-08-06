@@ -1,0 +1,113 @@
+{
+  "generatedAt": "2026-08-06T22:22:36.058Z",
+  "dryRun": true,
+  "fetchedPosts": 10,
+  "manualPosts": [],
+  "manualDecisions": [],
+  "manualFollowUps": [],
+  "replyCandidates": [],
+  "replyErrors": [],
+  "contentPlan": [
+    {
+      "id": "2026-08-06-morning",
+      "order": 1,
+      "slot": "morning",
+      "format": "text",
+      "objective": "mechanism_insight",
+      "safety": "policy_check_required",
+      "publish": "dry_run_until_live_flag"
+    },
+    {
+      "id": "2026-08-06-midday",
+      "order": 2,
+      "slot": "midday",
+      "format": "question",
+      "objective": "conversation",
+      "questionBrief": "Ask builders what part of an AI agent is mostly theater and what part actually compounds.",
+      "safety": "policy_check_required",
+      "publish": "dry_run_until_live_flag"
+    },
+    {
+      "id": "2026-08-06-afternoon",
+      "order": 3,
+      "slot": "afternoon",
+      "format": "poll",
+      "objective": "structured_feedback",
+      "pollOptions": 4,
+      "safety": "policy_check_required",
+      "publish": "dry_run_until_live_flag"
+    },
+    {
+      "id": "2026-08-06-evening",
+      "order": 4,
+      "slot": "evening",
+      "format": "image",
+      "objective": "visual_explanation",
+      "assetRequired": true,
+      "safety": "policy_check_required",
+      "publish": "dry_run_until_live_flag"
+    },
+    {
+      "id": "2026-08-06-late_evening",
+      "order": 5,
+      "slot": "late_evening",
+      "format": "text",
+      "objective": "founder_operator_take",
+      "safety": "policy_check_required",
+      "publish": "dry_run_until_live_flag"
+    }
+  ],
+  "contentDrafts": [
+    {
+      "format": "text",
+      "publishable": false,
+      "reason": "draft generation disabled"
+    },
+    {
+      "format": "question",
+      "publishable": false,
+      "reason": "draft generation disabled"
+    },
+    {
+      "format": "poll",
+      "publishable": false,
+      "reason": "draft generation disabled"
+    },
+    {
+      "format": "image",
+      "publishable": false,
+      "reason": "draft generation disabled"
+    },
+    {
+      "format": "text",
+      "publishable": false,
+      "reason": "draft generation disabled"
+    }
+  ],
+  "actions": [],
+  "feedback": {
+    "events": [
+      {
+        "event_type": "manual_post",
+        "language": "en",
+        "count": 8
+      },
+      {
+        "event_type": "manual_post",
+        "language": "ru",
+        "count": 2
+      }
+    ],
+    "proposals": [
+      {
+        "status": "proposed",
+        "count": 1
+      }
+    ],
+    "metrics": 0
+  },
+  "insights": {
+    "collected": 0,
+    "errors": []
+  }
+}
