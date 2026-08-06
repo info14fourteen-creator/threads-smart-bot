@@ -16,7 +16,7 @@ concurrency:
 jobs:
   learn:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 45
     env:
       OPENAI_API_KEY_OVERRIDE: ${{ secrets.OPENAI_API_KEY_OVERRIDE }}
       OPENAI_ORG_ID: ${{ secrets.OPENAI_ORG_ID }}
