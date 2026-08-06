@@ -10,6 +10,7 @@ export async function buildDecisionQueue(posts, { profile, runtime, useAi = fals
         post,
         profile,
         apiKey: runtime.openAiApiKey,
+        organizationId: runtime.openAiOrganizationId,
         baseUrl: runtime.openAiBaseUrl,
         model: runtime.openAiModel,
         fetchImpl,

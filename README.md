@@ -44,3 +44,29 @@ works without an OpenAI key.
 The implementation deliberately exposes only read methods in
 `src/threads-client.mjs`. Write-side Threads operations will require a
 separate policy gate and are not part of this phase.
+
+## Orchestration cycle
+
+Run the dry-run orchestrator to detect new manual posts, read replies on your
+own threads, draft safe replies, and create the daily mix of text, question,
+poll, image, and operator posts:
+
+```bash
+npm run orchestrate
+```
+
+The cycle writes `data/orchestration-cycle.json` and
+`data/threads-state.json`. It does not publish. `--live` is intentionally
+explicit and will only publish policy-passing text/poll posts and replies;
+image slots remain deferred until a public asset URL is available.
+
+The configured default is five posts per day: one poll, one image slot, two
+conversation questions, and one founder/operator post. The reply monitor caps
+itself at ten meaningful replies per cycle and one reply per user per day.
+When the OpenAI project has no credits, run `node --env-file=.env.local
+src/orchestrate-cli.mjs --ai=false` to validate the Threads/state layer without
+AI calls.
+
+A manually published post is never deleted or immediately duplicated. The
+agent keeps strong posts as learning signals and drafts a distinct follow-up
+for weak but non-blocked posts.

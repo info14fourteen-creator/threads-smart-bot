@@ -10,6 +10,26 @@
     "default_call_to_action": "follow_for_more",
     "do_not_use": ["follow-for-follow", "engagement_bait", "fake_urgency"]
   },
+  "automation": {
+    "mode": "shadow_then_guarded_live",
+    "posts_per_day_target": 5,
+    "poll_posts_per_day": 1,
+    "image_posts_per_day_min": 1,
+    "image_posts_per_day_max": 2,
+    "conversation_question_posts_per_day": 2,
+    "reply_monitoring": {
+      "enabled": true,
+      "max_replies_per_cycle": 10,
+      "max_replies_per_user_per_day": 1,
+      "only_meaningful_comments": true
+    },
+    "manual_posts": {
+      "detect": true,
+      "analyze": true,
+      "never_duplicate_immediately": true,
+      "weak_post_action": "draft_distinct_follow_up"
+    }
+  },
   "voice": {
     "traits": [
       "provocative",

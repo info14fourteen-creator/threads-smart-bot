@@ -38,7 +38,7 @@ export class ThreadsClient {
     this.fetchImpl = fetchImpl;
   }
 
-  async request(pathOrUrl, { params, signal } = {}) {
+  async requestWithMethod(method, pathOrUrl, { params, body, signal } = {}) {
     const url = new URL(pathOrUrl, `${this.baseUrl}/`);
     if (params) {
       for (const [key, value] of toSearchParams(params)) url.searchParams.set(key, value);
@@ -49,11 +49,13 @@ export class ThreadsClient {
     let response;
     try {
       response = await this.fetchImpl(url, {
-        method: "GET",
+        method,
         headers: {
           Accept: "application/json",
+          ...(body ? { "Content-Type": "application/json" } : {}),
           Authorization: `Bearer ${this.accessToken}`,
         },
+        ...(body ? { body: JSON.stringify(body) } : {}),
         signal,
       });
     } catch (error) {
@@ -72,6 +74,14 @@ export class ThreadsClient {
       });
     }
     return payload;
+  }
+
+  request(pathOrUrl, options = {}) {
+    return this.requestWithMethod("GET", pathOrUrl, options);
+  }
+
+  mutate(pathOrUrl, options = {}) {
+    return this.requestWithMethod("POST", pathOrUrl, options);
   }
 
   getMe({ fields = "id,username,name", signal } = {}) {
@@ -107,5 +117,43 @@ export class ThreadsClient {
 
   async searchKeyword(options = {}) {
     return this.collectPages(await this.keywordSearch(options), options);
+  }
+
+  getThreadReplies(threadId, { limit = 50, fields = DEFAULT_POST_FIELDS, signal } = {}) {
+    if (!threadId) throw new Error("A thread id is required");
+    return this.request(`/${encodeURIComponent(threadId)}/replies`, { params: { fields, limit }, signal });
+  }
+
+  async listThreadReplies(threadId, options = {}) {
+    return this.collectPages(await this.getThreadReplies(threadId, options), options);
+  }
+
+  createTextPost({ text, pollAttachment, replyToId, autoPublishText = false, replyControl, enableReplyApprovals = true, signal } = {}) {
+    if (!text?.trim()) throw new Error("Text is required");
+    return this.mutate("/me/threads", {
+      params: {
+        text: text.trim(),
+        media_type: "TEXT",
+        auto_publish_text: autoPublishText,
+        reply_to_id: replyToId,
+        reply_control: replyControl,
+        enable_reply_approvals: enableReplyApprovals,
+        poll_attachment: pollAttachment ? JSON.stringify(pollAttachment) : undefined,
+      },
+      signal,
+    });
+  }
+
+  createImageContainer({ text, imageUrl, altText, signal } = {}) {
+    if (!imageUrl) throw new Error("A public image URL is required");
+    return this.mutate("/me/threads", {
+      params: { text, media_type: "IMAGE", image_url: imageUrl, alt_text: altText },
+      signal,
+    });
+  }
+
+  publishContainer(creationId, { signal } = {}) {
+    if (!creationId) throw new Error("A creation id is required");
+    return this.mutate("/me/threads_publish", { params: { creation_id: creationId }, signal });
   }
 }

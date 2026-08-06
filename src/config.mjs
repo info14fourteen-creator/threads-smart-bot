@@ -11,10 +11,12 @@ export function loadRuntimeConfig(env = process.env) {
   return {
     threadsAccessToken: env.THREADS_ACCESS_TOKEN?.trim() || "",
     threadsBaseUrl: (env.THREADS_API_BASE_URL || DEFAULT_THREADS_BASE_URL).replace(/\/$/, ""),
-    openAiApiKey: env.OPENAI_API_KEY?.trim() || "",
+    openAiApiKey: env.OPENAI_API_KEY_OVERRIDE?.trim() || env.OPENAI_API_KEY?.trim() || "",
+    openAiOrganizationId: (env.OPENAI_ORGANIZATION_ID || env.OPENAI_ORG_ID)?.trim() || "",
     openAiBaseUrl: (env.OPENAI_BASE_URL || DEFAULT_OPENAI_BASE_URL).replace(/\/$/, ""),
     openAiModel: env.OPENAI_MODEL || "gpt-5-mini",
     threadsUserId: env.THREADS_USER_ID?.trim() || "",
+    threadsUsername: env.THREADS_USERNAME?.trim() || "",
   };
 }
 

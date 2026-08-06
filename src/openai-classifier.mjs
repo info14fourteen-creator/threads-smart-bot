@@ -18,15 +18,17 @@ function parseJson(text) {
   throw new Error("OpenAI classifier returned invalid JSON");
 }
 
-export async function classifyPostWithOpenAi({ post, profile, apiKey, baseUrl, model, fetchImpl = fetch }) {
+export async function classifyPostWithOpenAi({ post, profile, apiKey, organizationId, baseUrl, model, fetchImpl = fetch }) {
   if (!apiKey) throw new Error("OPENAI_API_KEY is required for AI classification");
   const normalized = normalizePost(post);
   const deterministic = scorePost(normalized, profile);
   if (deterministic.policy.hardViolations.length) return deterministic;
 
+  const headers = { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" };
+  if (organizationId) headers["OpenAI-Organization"] = organizationId;
   const response = await fetchImpl(`${baseUrl.replace(/\/$/, "")}/responses`, {
     method: "POST",
-    headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
+    headers,
     body: JSON.stringify({
       model,
       input: [

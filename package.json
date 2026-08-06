@@ -10,6 +10,7 @@
     "test": "node --test",
     "scan": "node --env-file=.env.local src/cli.mjs --source=mine --limit=25 --ai",
     "scan:search": "node --env-file=.env.local src/cli.mjs --source=search --ai",
+    "orchestrate": "node --env-file=.env.local src/orchestrate-cli.mjs --ai",
     "profile": "node --env-file=.env.local src/cli.mjs --mode=profile"
   }
 }

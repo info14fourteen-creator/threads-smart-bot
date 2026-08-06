@@ -21,12 +21,14 @@ test("classifier parses a Responses API JSON result", async () => {
   const fetchImpl = async (_url, options) => {
     const body = JSON.parse(options.body);
     assert.equal(body.model, "test-model");
+    assert.equal(options.headers["OpenAI-Organization"], "org-test");
     return new Response(JSON.stringify({ output_text: JSON.stringify({ label: "like", confidence: 0.91, reasons: ["mechanism"], topics: { ai: ["agent"] }, safety_flags: [] }) }), { status: 200 });
   };
   const result = await classifyPostWithOpenAi({
     post: { id: "2", text: "AI agents need an eval loop, not another demo." },
     profile,
     apiKey: "test-key",
+    organizationId: "org-test",
     baseUrl: "https://api.openai.com/v1",
     model: "test-model",
     fetchImpl,
