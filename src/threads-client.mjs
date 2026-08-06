@@ -9,6 +9,8 @@ export const DEFAULT_POST_FIELDS = [
   "reply_to_id",
 ].join(",");
 
+export const DEFAULT_INSIGHT_METRICS = ["views", "likes", "replies", "reposts", "quotes", "shares"].join(",");
+
 export class ThreadsApiError extends Error {
   constructor(message, { status, code, type, path } = {}) {
     super(message);
@@ -134,6 +136,11 @@ export class ThreadsClient {
 
   async listThreadReplies(threadId, options = {}) {
     return this.collectPages(await this.getThreadReplies(threadId, options), options);
+  }
+
+  getThreadInsights(threadId, { metrics = DEFAULT_INSIGHT_METRICS, signal } = {}) {
+    if (!threadId) throw new Error("A thread id is required");
+    return this.request(`/${encodeURIComponent(threadId)}/insights`, { params: { metric: metrics }, signal });
   }
 
   createTextPost({ text, pollAttachment, replyToId, autoPublishText = false, replyControl, enableReplyApprovals = true, signal } = {}) {

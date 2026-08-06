@@ -13,6 +13,46 @@ function tashkentDate(value = new Date()) {
   return new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Tashkent" }).format(value);
 }
 
+function insightMetrics(payload) {
+  return Object.fromEntries((payload?.data || []).map((item) => [
+    item.name,
+    item.values?.at(-1)?.value ?? item.value ?? null,
+  ]).filter(([name]) => name));
+}
+
+async function collectInsightSnapshots({ client, posts, botPosts, feedbackStore, now = new Date() }) {
+  if (!feedbackStore) return { collected: 0, errors: [] };
+  const windows = [
+    { bucket: "1h", min: 1, max: 2 },
+    { bucket: "24h", min: 24, max: 26 },
+    { bucket: "72h", min: 72, max: 76 },
+  ];
+  let collected = 0;
+  const errors = [];
+  for (const post of posts) {
+    const created = Date.parse(post.timestamp || "");
+    if (!post.id || !Number.isFinite(created)) continue;
+    const ageHours = (now.getTime() - created) / 3_600_000;
+    const eventType = botPosts.has(post.id) ? "bot_post" : "manual_post";
+    const eventId = feedbackStore.getEventId(eventType, post.id);
+    const window = windows.find((candidate) => ageHours >= candidate.min && ageHours < candidate.max && !feedbackStore.hasMetric(eventId, candidate.bucket));
+    if (!eventId || !window) continue;
+    try {
+      const payload = await client.getThreadInsights(post.id);
+      feedbackStore.recordMetric({
+        eventId,
+        snapshotBucket: window.bucket,
+        capturedAt: now.toISOString(),
+        metrics: { ...insightMetrics(payload), age_hours: Number(ageHours.toFixed(2)) },
+      });
+      collected += 1;
+    } catch (error) {
+      errors.push({ postId: post.id, bucket: window.bucket, error: error.message, code: error.code || null });
+    }
+  }
+  return { collected, errors };
+}
+
 export async function runCycle({
   client,
   profile,
@@ -102,6 +142,8 @@ export async function runCycle({
     }
   }
 
+  const insights = await collectInsightSnapshots({ client, posts, botPosts, feedbackStore });
+
   const contentPlan = buildDailyContentPlan({
     date,
     posts: profile.automation?.posts_per_day_target || 5,
@@ -164,5 +206,6 @@ export async function runCycle({
     contentDrafts,
     actions,
     feedback: feedbackSummary,
+    insights,
   };
 }

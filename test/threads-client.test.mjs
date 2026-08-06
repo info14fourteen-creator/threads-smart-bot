@@ -29,3 +29,18 @@ test("client follows pagination up to maxItems", async () => {
   assert.deepEqual(result.map((item) => item.id), ["1", "2"]);
   assert.equal(count, 2);
 });
+
+test("client requests post insights with the official metrics endpoint", async () => {
+  let calledUrl = "";
+  const client = new ThreadsClient({
+    accessToken: "secret-token",
+    fetchImpl: async (url) => {
+      calledUrl = String(url);
+      return new Response(JSON.stringify({ data: [{ name: "views", values: [{ value: 12 }] }] }), { status: 200 });
+    },
+  });
+  const result = await client.getThreadInsights("123");
+  assert.equal(result.data[0].name, "views");
+  assert.match(calledUrl, /\/123\/insights\?/);
+  assert.match(calledUrl, /metric=views%2Clikes/);
+});

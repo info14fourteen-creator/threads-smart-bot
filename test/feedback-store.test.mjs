@@ -15,6 +15,10 @@ test("feedback store upserts events and returns learning examples", async () => 
   assert.equal(store.learningExamples().length, 1);
   assert.equal(store.learningExamples()[0].text, "Как именно устроено?");
   assert.equal(store.summary().events[0].count, 1);
+  const eventId = store.getEventId("manual_reply", "r1");
+  store.recordMetric({ eventId, snapshotBucket: "1h", metrics: { views: 12 } });
+  assert.equal(store.hasMetric(eventId, "1h"), true);
+  assert.equal(store.summary().metrics, 1);
   store.close();
   await rm(directory, { recursive: true, force: true });
 });

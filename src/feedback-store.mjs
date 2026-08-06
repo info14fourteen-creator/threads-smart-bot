@@ -29,8 +29,9 @@ export class FeedbackStore {
         id INTEGER PRIMARY KEY,
         event_id INTEGER NOT NULL,
         captured_at TEXT NOT NULL,
+        snapshot_bucket TEXT NOT NULL DEFAULT 'adhoc',
         metrics_json TEXT NOT NULL,
-        UNIQUE(event_id, captured_at),
+        UNIQUE(event_id, snapshot_bucket),
         FOREIGN KEY(event_id) REFERENCES events(id)
       );
       CREATE TABLE IF NOT EXISTS profile_proposals (
@@ -41,6 +42,8 @@ export class FeedbackStore {
         status TEXT NOT NULL DEFAULT 'proposed'
       );
     `);
+    try { this.db.exec("ALTER TABLE metrics ADD COLUMN snapshot_bucket TEXT NOT NULL DEFAULT 'adhoc'"); } catch {}
+    this.db.exec("CREATE UNIQUE INDEX IF NOT EXISTS metrics_event_bucket_idx ON metrics(event_id, snapshot_bucket)");
   }
 
   recordEvent({ eventType, sourceId, parentId = null, username = null, language = "unknown", text, createdAt = null, isBot = false, metadata = {} }) {
@@ -62,12 +65,23 @@ export class FeedbackStore {
     return this.db.prepare("SELECT id FROM events WHERE event_type = ? AND source_id = ?").get(eventType, sourceId)?.id || null;
   }
 
-  recordMetric({ eventId, capturedAt = new Date().toISOString(), metrics = {} }) {
+  recordMetric({ eventId, capturedAt = new Date().toISOString(), snapshotBucket = "adhoc", metrics = {} }) {
     if (!eventId) return;
     this.db.prepare(`
-      INSERT OR REPLACE INTO metrics (event_id, captured_at, metrics_json)
-      VALUES (?, ?, ?)
-    `).run(eventId, capturedAt, JSON.stringify(metrics));
+      INSERT INTO metrics (event_id, captured_at, snapshot_bucket, metrics_json)
+      VALUES (?, ?, ?, ?)
+      ON CONFLICT(event_id, snapshot_bucket) DO UPDATE SET
+        captured_at = excluded.captured_at,
+        metrics_json = excluded.metrics_json
+    `).run(eventId, capturedAt, snapshotBucket, JSON.stringify(metrics));
+  }
+
+  getEventId(eventType, sourceId) {
+    return this.db.prepare("SELECT id FROM events WHERE event_type = ? AND source_id = ?").get(eventType, sourceId)?.id || null;
+  }
+
+  hasMetric(eventId, snapshotBucket) {
+    return Boolean(this.db.prepare("SELECT 1 FROM metrics WHERE event_id = ? AND snapshot_bucket = ? LIMIT 1").get(eventId, snapshotBucket));
   }
 
   saveProfileProposal({ sourceWindow, proposal, createdAt = new Date().toISOString(), status = "proposed" }) {
@@ -80,7 +94,8 @@ export class FeedbackStore {
   summary() {
     const events = this.db.prepare("SELECT event_type, language, COUNT(*) AS count FROM events GROUP BY event_type, language ORDER BY event_type, language").all();
     const proposals = this.db.prepare("SELECT status, COUNT(*) AS count FROM profile_proposals GROUP BY status ORDER BY status").all();
-    return { events, proposals };
+    const metrics = this.db.prepare("SELECT COUNT(*) AS count FROM metrics").get().count;
+    return { events, proposals, metrics };
   }
 
   learningExamples({ limit = 100 } = {}) {

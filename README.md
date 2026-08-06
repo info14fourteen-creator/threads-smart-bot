@@ -104,3 +104,7 @@ npm run learn
 
 Proposals are stored in SQLite with status `proposed`. Hard exclusions and
 publishing safety rules are never changed by the analyst automatically.
+
+For each recent post, the orchestrator also records official Threads Insights
+snapshots at approximately 1, 24, and 72 hours after publication. The current
+read path uses `views`, `likes`, `replies`, `reposts`, `quotes`, and `shares`.

@@ -46,6 +46,9 @@ database, OpenAI Responses API, and official Threads OAuth/API calls.
   manual replies, incoming comments, bot replies, and versioned tuning
   proposals. Public keyword search is implemented but the current token lacks
   `threads_keyword_search`.
+- The current token also successfully reads post Insights. The orchestrator
+  records `views`, `likes`, `replies`, `reposts`, `quotes`, and `shares` at
+  approximately 1h, 24h, and 72h windows.
 - Meta currently requires Tech Provider status and access verification before
   adding that permission to App Review. The next implementation step inside
   the currently available access is a public image-asset pipeline and guarded
