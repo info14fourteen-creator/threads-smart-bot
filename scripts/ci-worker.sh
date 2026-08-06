@@ -31,6 +31,7 @@ esac
 shopt -s nullglob
 state_files=(data/feedback.sqlite data/feedback.sqlite-* data/threads-state.json data/orchestration-cycle.json)
 for state_file in "${state_files[@]}"; do
+  [[ -e "$state_file" ]] || continue
   git add -f "$state_file"
 done
 
