@@ -30,6 +30,16 @@ database, OpenAI Responses API, and official Threads OAuth/API calls.
 
 ## Phases
 
+## Current status
+
+- Meta Threads app created and configured for testing.
+- `fourteentoken` authorization completed.
+- Official `/v1.0/me` API call verified the token and profile identity.
+- Existing 4TEEN OpenAI Responses API access mapped in
+  `docs/4teenwebsite-openai-integration.md`.
+- Next implementation step: read-only Threads ingestion and preference
+  scoring; publishing stays behind the policy gate.
+
 ### Phase 0 — repository and safety foundation
 
 - Public repository and documented boundaries.

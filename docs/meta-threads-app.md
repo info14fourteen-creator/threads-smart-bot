@@ -22,11 +22,17 @@ Reply creation/moderation permissions are intentionally not enabled yet. The
 agent can read and classify conversations first; write-side reply automation
 will be a separate decision.
 
-## Remaining authorization step
+## Authorization status
 
-The Chrome session used to create the app is not currently logged into the
-target Threads profile. A user must log in to the correct Threads account in
-the open Threads tab before the app can generate a test user token for that
-profile.
+The `fourteentoken` Threads profile accepted the app invitation and completed
+the consent flow. The generated token was verified against the official
+`/v1.0/me` endpoint and returned:
+
+- username: `fourteentoken`
+- display name: `Stanislav Ataev`
+- Threads user ID: `28347278724876585`
+
+The real token is stored only in the local ignored `.env.local` file. It is
+not written to this repository or GitHub.
 
 No app secret or access token belongs in this repository.
