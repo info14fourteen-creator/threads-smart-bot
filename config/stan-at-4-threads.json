@@ -7,6 +7,7 @@
     "posts_per_day_min": 3,
     "posts_per_day_max": 10,
     "mode": "auto_after_policy_checks",
+    "default_language": "ru",
     "default_call_to_action": "follow_for_more",
     "do_not_use": ["follow-for-follow", "engagement_bait", "fake_urgency"]
   },
@@ -57,8 +58,11 @@
     "4teen_and_wallet_building": 0.05
   },
   "post_quality_rules": [
-    "Open with a clear tension, non-obvious claim, or concrete observation.",
-    "Give the reader a useful idea, mechanism, framework, or testable prediction.",
+    "Open with a sharp hook in the first sentence: tension, non-obvious claim, or concrete observation.",
+    "Keep a normal post to 180-320 characters, maximum 3 short sentences, and never let it end mid-thought.",
+    "Give one useful idea or mechanism; do not pack several arguments into one post.",
+    "End with a specific question that makes a builder want to answer from experience.",
+    "Prefer short paragraphs and plain words; no numbered lists, long frameworks, or generic introductions.",
     "Prefer original synthesis over reposting headlines.",
     "Make the post understandable without assuming insider context.",
     "End with a reason to follow the account, not a generic request for likes.",

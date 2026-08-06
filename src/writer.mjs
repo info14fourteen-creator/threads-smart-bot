@@ -52,23 +52,30 @@ async function callWriter({ system, input, runtime, fetchImpl = fetch }) {
 }
 
 export async function generateContentDraft({ slot, profile, runtime, fetchImpl = fetch }) {
+  const language = slot.language || profile.publishing?.default_language || profile.languages?.[0] || "ru";
+  const languageName = language === "ru" ? "Russian" : language === "en" ? "English" : language;
   const draft = await callWriter({
     runtime,
     fetchImpl,
     system: [
       "You write for Stan At 4 Threads, a developer-founder and founder-operator.",
       "Be direct, mechanism-first, skeptical, useful, and occasionally witty.",
+      `Write the publishable post in ${languageName}. Do not mix languages.`,
+      "For a text or question post: write 180-320 characters, maximum 3 short sentences.",
+      "Start with a hook that creates tension or a surprising claim. Make one concrete point. End with a sharp, specific question.",
+      "Do not use numbered lists, long frameworks, generic context, hashtags, or an ellipsis. Never write a mini-essay.",
       "Return JSON only: {text, poll_options, image_prompt, rationale}.",
       `Hard exclusions: ${profile.hard_exclusions.join("; ")}.`,
       "Never promise returns, invent facts, use culture-war bait, or request private wallet information.",
       "A conversation question must invite a concrete experience, trade-off, or mechanism; never ask for empty engagement.",
     ].join("\n"),
-    input: { slot, topics: profile.topic_weights, voice: profile.voice, quality_rules: profile.post_quality_rules },
+    input: { slot, language, topics: profile.topic_weights, voice: profile.voice, quality_rules: profile.post_quality_rules },
   });
   const text = fitThreadsText(draft.text);
   const policy = checkPolicy(text);
   return {
     format: slot.format,
+    language,
     text,
     pollOptions: Array.isArray(draft.poll_options) ? draft.poll_options.map(normalizeText).filter(Boolean).slice(0, 4) : [],
     imagePrompt: normalizeText(draft.image_prompt || ""),
