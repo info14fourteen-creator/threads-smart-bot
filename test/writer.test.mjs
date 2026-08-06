@@ -23,6 +23,7 @@ test("content writer validates a poll draft", async () => {
   assert.equal(result.format, "poll");
   assert.equal(result.pollOptions.length, 3);
   assert.equal(result.publishable, true);
+  assert.equal(result.language, "ru");
 });
 
 test("reply writer can refuse a weak comment", async () => {
@@ -49,4 +50,14 @@ test("content writer fits drafts to the Threads text limit", async () => {
     fetchImpl: async () => new Response(JSON.stringify({ output_text: JSON.stringify({ text: "word ".repeat(200), poll_options: [], image_prompt: "", rationale: "" }) }), { status: 200 }),
   });
   assert.ok(result.text.length <= 500);
+});
+
+test("content writer can override the default language for a slot", async () => {
+  const result = await generateContentDraft({
+    slot: { format: "text", slot: "morning", language: "en", objective: "mechanism_insight" },
+    profile,
+    runtime,
+    fetchImpl: fakeWriterResponse({ text: "Ship the smallest useful loop. What are you measuring first?", poll_options: [], image_prompt: "", rationale: "specific question" }),
+  });
+  assert.equal(result.language, "en");
 });
