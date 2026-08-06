@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-08-06T22:38:55.546Z",
+  "generatedAt": "2026-08-06T23:09:37.563Z",
   "dryRun": false,
-  "fetchedPosts": 10,
+  "fetchedPosts": 11,
   "manualPosts": [],
   "manualDecisions": [],
   "manualFollowUps": [],
@@ -60,15 +60,16 @@
   "contentDrafts": [
     {
       "format": "text",
-      "text": "Tension: TRON looks like a throughput winner until you ask how it actually pays for that throughput. The interesting part isn’t the TPS claims — it’s which economic levers the chain uses to subsidize activity, and how that creates predictable failure modes. Mechanism-first take (short): TRON runs on three levers that matter to builders and traders — (1) resource leasing via freezing TRX (bandwidth & energy), (2) SR election + block rewards (vote-driven validator economics), and (3) liquidity…",
+      "language": "ru",
+      "text": "Tron не решает DeFi — он даёт дешёвые транзакции, но малую ликвидность. Механизм: чтобы снизить слиппейдж при переносе AMM, объединяйте ликвидность через TWAP-агрегатор и мульти-роутер к внешним пулам. Кто в проде делал это на Tron — какие реальные слиппейдж и задержки, разберу лучший кейс в следующем посте?",
       "pollOptions": [
-        "Run the resource-sensitivity test (freeze vs not)",
-        "Map SR vote concentration",
-        "Probe TRC20 liquidity slippage",
-        "Send me all three scripts"
+        "Делал TWAP+роутер в проде",
+        "Делал только роутер",
+        "Тестировал локально",
+        "Не пробовал"
       ],
-      "imagePrompt": "Minimal infographic for a technical crypto audience: central diagram showing three labeled levers — 'Freeze → Bandwidth/Energy', 'SR Votes → Validator Economics', 'TRC20 Liquidity → UX/Slippage' — with arrows between them showing interactions. Include small icons: a frozen coin for Freeze, a gear or node cluster for SR votes, and stacked coins/liquidity pool for TRC20. Add a small laptop with terminal lines and a stopwatch to imply quick tests. Flat colors, high contrast, clean sans-serif labels, 1200x675 px.",
-      "rationale": "Packed a mechanism-first thread that opens with a tension, lists concrete, measurable experiments, and separates evidence from interpretation. The post avoids fabricated numbers and financial promises, gives testable predictions, and ends with a clear reason to follow (code/scripts). Poll invites a concrete choice about which experiment to run; image prompt matches the analytical, builder-first vibe.",
+      "imagePrompt": "A pragmatic developer at a dark terminal, Tron logo on the monitor, glowing liquidity pipes connecting AMM pools, a slippage chart overlay, clean low-poly style, high-contrast cinematic lighting, focused and technical mood",
+      "rationale": "Открывающий хук ставит напряжение; одна конкретная идея — TWAP-агрегатор + мульти-роутер; факт и следствие разделены (дешёвый газ vs низкая ликвидность); пост из трёх коротких предложений и заканчивается конкретным вопросом, который приглашает к обмену опытом и даёт повод подписаться (разбор кейса). Соответствует тональности «founder/operator», без гипотез с цифрами и без запрещённого контента.",
       "policy": {
         "passed": true,
         "hardViolations": [],
@@ -81,11 +82,16 @@
   "actions": [
     {
       "type": "text",
-      "id": "17908944711449785"
+      "id": "18121623868838951"
     }
   ],
   "feedback": {
     "events": [
+      {
+        "event_type": "bot_post",
+        "language": "en",
+        "count": 1
+      },
       {
         "event_type": "manual_post",
         "language": "en",
