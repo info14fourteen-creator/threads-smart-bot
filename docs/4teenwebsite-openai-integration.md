@@ -38,3 +38,7 @@ The Threads bot should reuse the same control-plane credential path through a se
 4. draft or auto-publish recommendation.
 
 The classifier must not perform likes, follows, replies, or DMs. Threads publishing remains a separate explicit action guarded by the bot policy.
+
+For local development, this repository now uses a separate project key named
+`threads-smart-bot` in the ignored `.env.local` file. The key value is never
+tracked or printed.

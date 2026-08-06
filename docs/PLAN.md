@@ -37,8 +37,14 @@ database, OpenAI Responses API, and official Threads OAuth/API calls.
 - Official `/v1.0/me` API call verified the token and profile identity.
 - Existing 4TEEN OpenAI Responses API access mapped in
   `docs/4teenwebsite-openai-integration.md`.
-- Next implementation step: read-only Threads ingestion and preference
-  scoring; publishing stays behind the policy gate.
+- Read-only Threads client, deterministic policy scoring, deduplication, and
+  private OpenAI classification are implemented in `src/`.
+- Own-profile scan is verified against live Threads data and the new OpenAI
+  key. Public keyword search is implemented but requires re-authorization of
+  the current token with `threads_keyword_search`.
+- Next implementation step: complete OAuth re-authorization, then add
+  persistence, scheduled ingestion, and a review queue UI; publishing stays
+  behind the policy gate.
 
 ### Phase 0 — repository and safety foundation
 

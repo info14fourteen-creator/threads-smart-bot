@@ -35,4 +35,9 @@ the consent flow. The generated token was verified against the official
 The real token is stored only in the local ignored `.env.local` file. It is
 not written to this repository or GitHub.
 
+The verified token can read the account profile and own threads. A live
+`keyword_search` check currently returns Meta code `10` (missing permission),
+so public conversation discovery needs a follow-up OAuth authorization that
+explicitly includes `threads_keyword_search`.
+
 No app secret or access token belongs in this repository.
