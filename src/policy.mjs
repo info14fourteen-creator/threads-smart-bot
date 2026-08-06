@@ -18,7 +18,8 @@ const HARD_EXCLUSION_PATTERNS = [
 ];
 
 const REVIEW_PATTERNS = [
-  { label: "financial_claim", pattern: /\b(?:buy|sell|entry|target|price|yield|apy|apr|return|profit|bullish|bearish)\b/i },
+  { label: "financial_claim", pattern: /\b(?:entry|target|price|yield|apy|apr|return|profit|bullish|bearish)\b/i },
+  { label: "financial_claim", pattern: /\b(?:buy|sell)\s+(?:btc|bitcoin|eth|ethereum|crypto|token|coin|tron|trx|stablecoin)\b|\b(?:btc|bitcoin|eth|ethereum|crypto|token|coin|tron|trx|stablecoin)\s+(?:buy|sell)\b/i },
   { label: "financial_claim", pattern: /\b(?:long|short)\s+(?:btc|bitcoin|eth|ethereum|crypto|token|coin|tron|trx|stablecoin)\b/i },
   { label: "unverified_claim", pattern: /\b(?:breaking|confirmed|official|partnership|launching|airdrop|แจก|guaranteed)\b/i },
   { label: "wallet_or_contract_link", pattern: /(?:0x[a-f0-9]{20,}|T[a-z0-9]{20,}|https?:\/\/\S+)/i },
