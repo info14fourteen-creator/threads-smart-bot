@@ -6,6 +6,14 @@ function fitThreadsText(value, max = 500) {
   return `${text.slice(0, max - 1).replace(/\s+\S*$/, "").trim()}…`;
 }
 
+export function detectLanguage(value) {
+  const text = normalizeText(value);
+  const cyrillic = (text.match(/[А-Яа-яЁё]/g) || []).length;
+  const latin = (text.match(/[A-Za-z]/g) || []).length;
+  if (!cyrillic && !latin) return "unknown";
+  return cyrillic > latin ? "ru" : "en";
+}
+
 function extractResponseText(payload) {
   if (typeof payload?.output_text === "string" && payload.output_text.trim()) return payload.output_text.trim();
   for (const item of payload?.output || []) {
@@ -71,6 +79,7 @@ export async function generateContentDraft({ slot, profile, runtime, fetchImpl =
 }
 
 export async function generateReplyDraft({ post, reply, profile, runtime, fetchImpl = fetch }) {
+  const language = detectLanguage(reply.text);
   const draft = await callWriter({
     runtime,
     fetchImpl,
@@ -78,15 +87,16 @@ export async function generateReplyDraft({ post, reply, profile, runtime, fetchI
       "You write concise, human replies for Stan At 4 Threads.",
       "Reply only when the comment contains a real question, useful disagreement, or concrete experience.",
       "Do not reply to spam, greetings, insults, financial-advice requests, or unsupported token claims.",
+      `Reply in the same language as the comment. Detected comment language: ${language}. Do not translate it to another language.`,
       "Return JSON only: {action, text, reason}. action must be reply, skip, or needs_review.",
       `Hard exclusions: ${profile.hard_exclusions.join("; ")}.`,
     ].join("\n"),
-    input: { post: { text: post.text, username: post.username }, comment: { text: reply.text, username: reply.username } },
+    input: { post: { text: post.text, username: post.username }, comment: { text: reply.text, username: reply.username }, language },
   });
   const text = fitThreadsText(draft.text);
   const policy = checkPolicy(text);
   const action = policy.hardViolations.length ? "skip" : ["reply", "skip", "needs_review"].includes(draft.action) ? draft.action : "needs_review";
-  return { action, text, reason: normalizeText(draft.reason || ""), policy };
+  return { action, text, reason: normalizeText(draft.reason || ""), language, policy };
 }
 
 export async function generateManualFollowUp({ post, profile, runtime, fetchImpl = fetch }) {

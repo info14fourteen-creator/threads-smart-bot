@@ -8,6 +8,10 @@ function isNew(id, seen) {
   return Boolean(id) && !seen.has(id);
 }
 
+function tashkentDate(value = new Date()) {
+  return new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Tashkent" }).format(value);
+}
+
 export async function runCycle({
   client,
   profile,
@@ -47,15 +51,22 @@ export async function runCycle({
   const replyCandidates = [];
   const replyErrors = [];
   const seenReplies = new Set(state.seenReplyIds);
+  const today = tashkentDate();
+  const repliedUsersToday = new Set((state.replyActions || [])
+    .filter((item) => item.date === today && item.username)
+    .map((item) => item.username));
+  const pendingReplyUsers = new Set();
   for (const post of posts.filter((item) => item.has_replies && item.id)) {
     if (replyCandidates.length >= maxReplies) break;
     try {
       const replies = await client.listThreadReplies(post.id, { maxItems: maxReplies });
       for (const reply of replies) {
         if (!isNew(reply.id, seenReplies) || reply.username === runtime.threadsUsername) continue;
+        if (reply.username && (repliedUsersToday.has(reply.username) || pendingReplyUsers.has(reply.username))) continue;
         if (replyCandidates.length >= maxReplies) break;
         const draft = useAi ? await generateReplyDraft({ post, reply, profile, runtime, fetchImpl }) : null;
         replyCandidates.push({ post, reply, draft });
+        if (draft?.action === "reply" && reply.username) pendingReplyUsers.add(reply.username);
       }
     } catch (error) {
       replyErrors.push({ postId: post.id, error: error.message, code: error.code || null });
@@ -78,7 +89,10 @@ export async function runCycle({
     for (const item of replyCandidates.filter((candidate) => candidate.draft?.action === "reply" && candidate.draft.policy.passed).slice(0, maxReplies)) {
       const result = await client.createTextPost({ text: item.draft.text, replyToId: item.reply.id, autoPublishText: true });
       actions.push({ type: "reply", replyToId: item.reply.id, id: result.id || null });
-      if (result.id) state.botPostIds.push(result.id);
+      if (result.id) {
+        state.botPostIds.push(result.id);
+        state.replyActions.push({ username: item.reply.username || null, date: today, replyToId: item.reply.id });
+      }
     }
     for (const item of manualFollowUps.filter((candidate) => candidate.draft.action === "follow_up" && candidate.draft.policy.passed).slice(0, 1)) {
       const result = await client.createTextPost({ text: item.draft.text, autoPublishText: true });
@@ -101,6 +115,7 @@ export async function runCycle({
 
   remember(state, "seenPostIds", posts.map((post) => post.id));
   remember(state, "seenReplyIds", replyCandidates.map((item) => item.reply.id));
+  state.replyActions = (state.replyActions || []).slice(-5000);
   state.initialized = true;
   state.lastRunAt = new Date().toISOString();
   await saveState(statePath, state);

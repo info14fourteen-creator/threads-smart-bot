@@ -5,6 +5,7 @@ export const EMPTY_STATE = {
   seenPostIds: [],
   seenReplyIds: [],
   botPostIds: [],
+  replyActions: [],
   lastRunAt: null,
 };
 

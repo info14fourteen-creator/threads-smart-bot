@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import profile from "../config/stan-at-4-threads.json" with { type: "json" };
-import { generateContentDraft, generateReplyDraft } from "../src/writer.mjs";
+import { detectLanguage, generateContentDraft, generateReplyDraft } from "../src/writer.mjs";
 
 const runtime = { openAiApiKey: "test-key", openAiBaseUrl: "https://api.openai.com/v1", openAiModel: "test-model" };
 
@@ -34,6 +34,11 @@ test("reply writer can refuse a weak comment", async () => {
     fetchImpl: fakeWriterResponse({ action: "skip", text: "", reason: "greeting only" }),
   });
   assert.equal(result.action, "skip");
+});
+
+test("reply language follows the comment language", () => {
+  assert.equal(detectLanguage("Как устроен этот агент?"), "ru");
+  assert.equal(detectLanguage("How does this agent work?"), "en");
 });
 
 test("content writer fits drafts to the Threads text limit", async () => {

@@ -72,6 +72,9 @@ npm run orchestrate -- --live --slot=afternoon
 The configured default is five posts per day: one poll, one image slot, two
 conversation questions, and one founder/operator post. The reply monitor caps
 itself at ten meaningful replies per cycle and one reply per user per day.
+Replies preserve the detected language of the comment (Russian stays Russian,
+English stays English). The reply monitor runs every 30 minutes and only acts
+on new comments that have not already been handled.
 When the OpenAI project has no credits, run `node --env-file=.env.local
 src/orchestrate-cli.mjs --ai=false` to validate the Threads/state layer without
 AI calls.
