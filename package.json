@@ -11,8 +11,10 @@
     "scan": "node --env-file=.env.local src/cli.mjs --source=mine --limit=25 --ai",
     "scan:search": "node --env-file=.env.local src/cli.mjs --source=search --ai",
     "orchestrate": "node --env-file=.env.local src/orchestrate-cli.mjs --ai",
+    "orchestrate:ci": "node src/orchestrate-cli.mjs --ai",
     "feedback": "node src/feedback-cli.mjs",
     "learn": "node --env-file=.env.local src/learn-cli.mjs --ai",
+    "learn:ci": "node src/learn-cli.mjs --ai",
     "profile": "node --env-file=.env.local src/cli.mjs --mode=profile"
   }
 }

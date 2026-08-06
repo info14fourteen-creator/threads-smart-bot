@@ -1,0 +1,34 @@
+name: Threads reply monitor
+
+on:
+  schedule:
+    # GitHub cron is UTC; this runs every 30 minutes.
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: threads-state
+  cancel-in-progress: false
+
+jobs:
+  replies:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
+      THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
+      THREADS_USERNAME: ${{ secrets.THREADS_USERNAME }}
+      OPENAI_API_KEY_OVERRIDE: ${{ secrets.OPENAI_API_KEY_OVERRIDE }}
+      OPENAI_ORG_ID: ${{ secrets.OPENAI_ORG_ID }}
+      OPENAI_MODEL: gpt-5-mini
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: npm install --ignore-scripts --no-audit --no-fund
+      - name: Reply to new meaningful comments
+        run: bash scripts/ci-worker.sh replies
