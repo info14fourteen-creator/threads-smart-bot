@@ -19,8 +19,12 @@ export async function runCycle({
   live = false,
   maxReplies = 10,
   date,
+  publishSlot,
   fetchImpl = fetch,
 } = {}) {
+  if (live && draftContent && !publishSlot) {
+    throw new Error("Live content publishing requires --slot=morning|midday|afternoon|evening|late_evening");
+  }
   const state = await loadState(statePath);
   const posts = dedupePosts(await client.listMyThreads({ limit: postLimit, maxItems: postLimit }));
   const firstRun = !state.initialized;
@@ -63,9 +67,11 @@ export async function runCycle({
     posts: profile.automation?.posts_per_day_target || 5,
     automation: profile.automation,
   });
+  const slotsToDraft = live && publishSlot ? contentPlan.filter((slot) => slot.slot === publishSlot) : contentPlan;
+  if (live && draftContent && !slotsToDraft.length) throw new Error(`Unknown or unavailable publish slot: ${publishSlot}`);
   const contentDrafts = draftContent && useAi
-    ? await Promise.all(contentPlan.map((slot) => generateContentDraft({ slot, profile, runtime, fetchImpl })))
-    : contentPlan.map((slot) => ({ format: slot.format, publishable: false, reason: "draft generation disabled" }));
+    ? await Promise.all(slotsToDraft.map((slot) => generateContentDraft({ slot, profile, runtime, fetchImpl })))
+    : slotsToDraft.map((slot) => ({ format: slot.format, publishable: false, reason: "draft generation disabled" }));
 
   const actions = [];
   if (live) {
@@ -79,7 +85,7 @@ export async function runCycle({
       actions.push({ type: "manual_follow_up", sourcePostId: item.post.id, id: result.id || null });
       if (result.id) state.botPostIds.push(result.id);
     }
-    for (const draft of contentDrafts.filter((item) => item.publishable).slice(0, 5)) {
+    for (const draft of contentDrafts.filter((item) => item.publishable).slice(0, 1)) {
       if (draft.format === "image") continue;
       const result = await client.createTextPost({
         text: draft.text,

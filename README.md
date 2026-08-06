@@ -57,8 +57,17 @@ npm run orchestrate
 
 The cycle writes `data/orchestration-cycle.json` and
 `data/threads-state.json`. It does not publish. `--live` is intentionally
-explicit and will only publish policy-passing text/poll posts and replies;
-image slots remain deferred until a public asset URL is available.
+explicit and requires one `--slot` value, so a scheduler cannot publish the
+whole day in one batch. It only publishes policy-passing text/poll posts and
+replies; image slots remain deferred until a public asset URL is available.
+
+Initial live slots (Asia/Tashkent):
+
+```bash
+npm run orchestrate -- --live --slot=morning
+npm run orchestrate -- --live --slot=midday
+npm run orchestrate -- --live --slot=afternoon
+```
 
 The configured default is five posts per day: one poll, one image slot, two
 conversation questions, and one founder/operator post. The reply monitor caps

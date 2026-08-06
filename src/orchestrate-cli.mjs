@@ -32,6 +32,7 @@ try {
     live,
     maxReplies: Math.min(20, Math.max(1, Number(args["max-replies"] || 10))),
     date: args.date,
+    publishSlot: args.slot,
   });
   const outputPath = args.out || "data/orchestration-cycle.json";
   await mkdir(outputPath.split("/").slice(0, -1).join("/") || ".", { recursive: true });
