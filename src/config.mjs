@@ -20,8 +20,8 @@ export function loadRuntimeConfig(env = process.env) {
   };
 }
 
-export function requireRuntimeConfig(config, { requireOpenAi = false } = {}) {
-  if (!config.threadsAccessToken) {
+export function requireRuntimeConfig(config, { requireOpenAi = false, requireThreads = true } = {}) {
+  if (requireThreads && !config.threadsAccessToken) {
     throw new Error("THREADS_ACCESS_TOKEN is required");
   }
   if (requireOpenAi && !config.openAiApiKey) {
