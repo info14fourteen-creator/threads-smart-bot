@@ -32,6 +32,10 @@ test("ordinary product language containing sell is not a trading claim", () => {
   assert.ok(checkPolicy("Sell BTC only after checking your risk limits.").reviewFlags.includes("financial_claim"));
 });
 
+test("market terminology in a mechanism explanation is not automatically a claim", () => {
+  assert.equal(checkPolicy("Retention is not determined by TRX price or block time.").requiresReview, false);
+});
+
 test("dedupe uses ids and normalized content hashes", () => {
   const posts = [{ id: "a", text: "One" }, { id: "a", text: "Two" }, { text: " Same  text " }, { text: "same text" }];
   assert.equal(dedupePosts(posts).length, 2);
