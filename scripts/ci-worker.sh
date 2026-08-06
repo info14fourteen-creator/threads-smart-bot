@@ -22,6 +22,9 @@ case "$MODE" in
   learn)
     npm run learn:ci -- --limit=100
     ;;
+  health)
+    npm run orchestrate:ci -- --ai=false --draft-content=false --max-replies=0 --limit=25
+    ;;
   *)
     echo "Unknown mode: $MODE" >&2
     exit 2
