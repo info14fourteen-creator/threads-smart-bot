@@ -1,15 +1,76 @@
 {
-  "generatedAt": "2026-08-06T23:09:37.563Z",
+  "generatedAt": "2026-08-07T01:43:16.878Z",
   "dryRun": false,
-  "fetchedPosts": 11,
+  "fetchedPosts": 12,
   "manualPosts": [],
   "manualDecisions": [],
   "manualFollowUps": [],
-  "replyCandidates": [],
+  "replyCandidates": [
+    {
+      "post": {
+        "id": "18136747903591446",
+        "text": "Вайбкодеры!!! Кто то уже выложил приложения в апп стор или гугл плэй? Кто то прошел эти круги ада с IARC, D-U-N-S ???\nЕсли прошли напишите в коммент сколько времени заняло",
+        "username": "fourteentoken",
+        "timestamp": "2026-08-06T10:44:17+0000",
+        "permalink": "https://www.threads.com/@fourteentoken/post/DbshzXaiHOg",
+        "has_replies": true
+      },
+      "reply": {
+        "id": "18349854139218060",
+        "has_replies": true,
+        "permalink": "https://www.threads.com/@victorchernogorov/post/Dbswn67DZwE",
+        "text": "Выкладывай как физлицо и не парься с дансом. \nПриложение VK несколько лет было от физика выложено и ничего :)",
+        "timestamp": "2026-08-06T12:53:48+0000",
+        "username": "victorchernogorov"
+      },
+      "draft": {
+        "action": "reply",
+        "text": "Да, можно выкладывать как физлицо — D‑U‑N‑S требуется только для корпоративного (Organization) аккаунта Apple. Минусы: ваше ФИО/данные будут видны в профиле, сложнее потом переоформить на компанию, и могут быть нюансы с выплатами/налогами — проверьте реквизиты. По IARC: часть магазинов использует IARC для автоматического возрастного рейтинга, но процедуры и требования отличаются у Google и Apple — иногда проще заполнить стандартную анкету в консоли. По времени: регистрация и верификация…",
+        "reason": "Комментарий содержит практический совет/опыт по выкладыванию приложений (конкретный случай), поэтому уместен вежливый ответ с уточнениями и предостережениями.",
+        "language": "ru",
+        "policy": {
+          "passed": true,
+          "hardViolations": [],
+          "reviewFlags": [],
+          "requiresReview": false
+        }
+      }
+    },
+    {
+      "post": {
+        "id": "17996005856804206",
+        "text": "You can only pick ONE.\n\n🟠 Bitcoin\n🔵 Ethereum\n🟣 Solana\n🔴 TRON\n🟡 BNB Chain\n🟢 Base\n⚪ Other\n\nYou also have to eliminate ONE forever.\n\nWhich two did you choose?\n\n👇",
+        "username": "fourteentoken",
+        "timestamp": "2026-08-03T08:16:59+0000",
+        "permalink": "https://www.threads.com/@fourteentoken/post/Dbkij3EiGuK",
+        "has_replies": true
+      },
+      "reply": {
+        "id": "18610233052021467",
+        "has_replies": true,
+        "permalink": "https://www.threads.com/@topmarketview/post/DbklPOGjB9Z",
+        "text": "Bitcoin survives every cycle without a foundation, VC unlock schedule, or single point of failure. That's the keep. Solana still goes dark during real stress. That's the eliminate.",
+        "timestamp": "2026-08-03T08:40:23+0000",
+        "username": "topmarketview"
+      },
+      "draft": {
+        "action": "reply",
+        "text": "Solid take — Bitcoin is the obvious ‘keep’ for sound-money, censorship-resistant reasons. I’d just push back on nuking Solana forever. Its outages are a real, disqualifying pain, but the chain has driven low-fee UX innovation and the team/validators are iterating on fixes. If you truly had to eliminate one chain permanently, I’d sooner axe something with clearer centralization/VC dependence (TRON or BNB Chain) than burn Solana’s performance experiments off the map.",
+        "reason": "Offers a concise disagreement and alternative perspective, highlighting trade-offs and suggesting other chains that might be eliminated instead of Solana.",
+        "language": "en",
+        "policy": {
+          "passed": true,
+          "hardViolations": [],
+          "reviewFlags": [],
+          "requiresReview": false
+        }
+      }
+    }
+  ],
   "replyErrors": [],
   "contentPlan": [
     {
-      "id": "2026-08-06-morning",
+      "id": "2026-08-07-morning",
       "order": 1,
       "slot": "morning",
       "format": "text",
@@ -18,7 +79,7 @@
       "publish": "dry_run_until_live_flag"
     },
     {
-      "id": "2026-08-06-midday",
+      "id": "2026-08-07-midday",
       "order": 2,
       "slot": "midday",
       "format": "question",
@@ -28,7 +89,7 @@
       "publish": "dry_run_until_live_flag"
     },
     {
-      "id": "2026-08-06-afternoon",
+      "id": "2026-08-07-afternoon",
       "order": 3,
       "slot": "afternoon",
       "format": "poll",
@@ -38,7 +99,7 @@
       "publish": "dry_run_until_live_flag"
     },
     {
-      "id": "2026-08-06-evening",
+      "id": "2026-08-07-evening",
       "order": 4,
       "slot": "evening",
       "format": "image",
@@ -48,7 +109,7 @@
       "publish": "dry_run_until_live_flag"
     },
     {
-      "id": "2026-08-06-late_evening",
+      "id": "2026-08-07-late_evening",
       "order": 5,
       "slot": "late_evening",
       "format": "text",
@@ -60,29 +121,40 @@
   "contentDrafts": [
     {
       "format": "text",
-      "language": "ru",
-      "text": "Tron не решает DeFi — он даёт дешёвые транзакции, но малую ликвидность. Механизм: чтобы снизить слиппейдж при переносе AMM, объединяйте ликвидность через TWAP-агрегатор и мульти-роутер к внешним пулам. Кто в проде делал это на Tron — какие реальные слиппейдж и задержки, разберу лучший кейс в следующем посте?",
-      "pollOptions": [
-        "Делал TWAP+роутер в проде",
-        "Делал только роутер",
-        "Тестировал локально",
-        "Не пробовал"
-      ],
-      "imagePrompt": "A pragmatic developer at a dark terminal, Tron logo on the monitor, glowing liquidity pipes connecting AMM pools, a slippage chart overlay, clean low-poly style, high-contrast cinematic lighting, focused and technical mood",
-      "rationale": "Открывающий хук ставит напряжение; одна конкретная идея — TWAP-агрегатор + мульти-роутер; факт и следствие разделены (дешёвый газ vs низкая ликвидность); пост из трёх коротких предложений и заканчивается конкретным вопросом, который приглашает к обмену опытом и даёт повод подписаться (разбор кейса). Соответствует тональности «founder/operator», без гипотез с цифрами и без запрещённого контента.",
-      "policy": {
-        "passed": true,
-        "hardViolations": [],
-        "reviewFlags": [],
-        "requiresReview": false
-      },
-      "publishable": true
+      "publishable": false,
+      "reason": "draft generation disabled"
+    },
+    {
+      "format": "question",
+      "publishable": false,
+      "reason": "draft generation disabled"
+    },
+    {
+      "format": "poll",
+      "publishable": false,
+      "reason": "draft generation disabled"
+    },
+    {
+      "format": "image",
+      "publishable": false,
+      "reason": "draft generation disabled"
+    },
+    {
+      "format": "text",
+      "publishable": false,
+      "reason": "draft generation disabled"
     }
   ],
   "actions": [
     {
-      "type": "text",
-      "id": "18121623868838951"
+      "type": "reply",
+      "replyToId": "18349854139218060",
+      "id": "17863540746638132"
+    },
+    {
+      "type": "reply",
+      "replyToId": "18610233052021467",
+      "id": "18219756784333172"
     }
   ],
   "feedback": {
@@ -90,6 +162,21 @@
       {
         "event_type": "bot_post",
         "language": "en",
+        "count": 1
+      },
+      {
+        "event_type": "bot_post",
+        "language": "ru",
+        "count": 1
+      },
+      {
+        "event_type": "incoming_reply",
+        "language": "en",
+        "count": 1
+      },
+      {
+        "event_type": "incoming_reply",
+        "language": "ru",
         "count": 1
       },
       {
