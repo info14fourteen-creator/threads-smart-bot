@@ -1,9 +1,6 @@
 name: Threads learning proposal
 
 on:
-  schedule:
-    # 03:00 Asia/Tashkent (UTC+5).
-    - cron: "0 22 * * *"
   workflow_dispatch:
 
 permissions:

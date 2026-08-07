@@ -1,0 +1,87 @@
+name: Threads scheduler
+
+on:
+  schedule:
+    # One heartbeat for all tasks. The resolver uses Asia/Tashkent and tolerates scheduler delay.
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
+    inputs:
+      task:
+        description: "Task to run manually"
+        required: true
+        default: auto
+        type: choice
+        options:
+          - auto
+          - replies
+          - content
+          - learning
+      slot:
+        description: "Content slot when task=content"
+        required: false
+        type: choice
+        options:
+          - morning
+          - midday
+          - afternoon
+
+permissions:
+  contents: write
+
+concurrency:
+  group: threads-state
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
+      THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
+      THREADS_USERNAME: ${{ secrets.THREADS_USERNAME }}
+      OPENAI_API_KEY_OVERRIDE: ${{ secrets.OPENAI_API_KEY_OVERRIDE }}
+      OPENAI_ORG_ID: ${{ secrets.OPENAI_ORG_ID }}
+      OPENAI_MODEL: gpt-5-mini
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: npm install --ignore-scripts --no-audit --no-fund
+      - name: Restore scheduler state
+        run: |
+          mkdir -p data
+          if git fetch origin bot-state >/dev/null 2>&1; then
+            git checkout origin/bot-state -- data >/dev/null 2>&1 || true
+          fi
+      - name: Resolve due tasks
+        id: plan
+        env:
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
+          MANUAL_TASK: ${{ inputs.task }}
+          MANUAL_SLOT: ${{ inputs.slot }}
+        run: node scripts/scheduler.mjs resolve >> "$GITHUB_OUTPUT"
+      - name: Monitor replies
+        if: steps.plan.outputs.replies == 'true'
+        run: bash scripts/ci-worker.sh replies
+      - name: Publish due content slots
+        if: steps.plan.outputs.content_slots != ''
+        env:
+          CONTENT_SLOTS: ${{ steps.plan.outputs.content_slots }}
+          SCHEDULE_DATE: ${{ steps.plan.outputs.date }}
+        run: |
+          IFS=',' read -r -a slots <<< "$CONTENT_SLOTS"
+          for slot in "${slots[@]}"; do
+            bash scripts/ci-worker.sh content "$slot"
+            node scripts/scheduler.mjs mark "content:$slot" "$SCHEDULE_DATE"
+            SKIP_STATE_PULL=1 bash scripts/ci-worker.sh persist
+          done
+      - name: Generate learning proposal
+        if: steps.plan.outputs.learning == 'true'
+        env:
+          SCHEDULE_DATE: ${{ steps.plan.outputs.date }}
+        run: |
+          bash scripts/ci-worker.sh learn
+          node scripts/scheduler.mjs mark learning "$SCHEDULE_DATE"
+          SKIP_STATE_PULL=1 bash scripts/ci-worker.sh persist
