@@ -1,11 +1,42 @@
 {
-  "generatedAt": "2026-08-07T13:25:44.972Z",
+  "generatedAt": "2026-08-07T14:35:38.475Z",
   "dryRun": false,
-  "fetchedPosts": 14,
+  "fetchedPosts": 15,
   "manualPosts": [],
   "manualDecisions": [],
   "manualFollowUps": [],
-  "replyCandidates": [],
+  "replyCandidates": [
+    {
+      "post": {
+        "id": "18209446180349627",
+        "text": "Большинство ИИ‑агентов — сценический реквизит, не ускоритель. Компаундность рождается в цикле: чистые сигналы, стабильный поток метрик и автоматическое исполнение. Что у вас реально компаундила метрики: данные, настройка вознаграждения, исполнение или интерфейс?",
+        "username": "fourteentoken",
+        "timestamp": "2026-08-07T13:25:42+0000",
+        "permalink": "https://www.threads.com/@fourteentoken/post/DbvZENTFE8A",
+        "has_replies": true
+      },
+      "reply": {
+        "id": "18118699279686839",
+        "has_replies": false,
+        "permalink": "https://www.threads.com/@crm_double_a/post/DbvccSUDK3M",
+        "text": "Данные - фундамент, без них всё остальное просто красивый интерфейс с иллюзией работы :) В нашей практике именно \"грязные\" данные на входе убивают 80% потенциала любой автоматизации.",
+        "timestamp": "2026-08-07T13:55:10+0000",
+        "username": "crm_double_a"
+      },
+      "draft": {
+        "action": "reply",
+        "text": "Полностью согласен — грязные данные ломают всё. Что реально помогает в практике: - Контракт данных и валидация на входе (schema checks, типы, consistency). - ETL с автоматической очисткой и enrichment (dedup, нормализация, нормализация форматов). - Метрики качества данных и алерты + мониторинг дрейфта. - Human‑in‑the‑loop/active learning для редких или спорных случаев. - Наборы тестов и симуляция ошибок, чтобы стресс-тестить пайплайны. - Чёткие владельцы данных и SLA на исправление проблем.…",
+        "reason": "Комментарий содержит конкретный опыт о проблеме «грязных данных», полезно ответить практическими шагами по улучшению качества данных и автопайплайнов.",
+        "language": "ru",
+        "policy": {
+          "passed": true,
+          "hardViolations": [],
+          "reviewFlags": [],
+          "requiresReview": false
+        }
+      }
+    }
+  ],
   "replyErrors": [],
   "contentPlan": [
     {
@@ -59,30 +90,36 @@
   ],
   "contentDrafts": [
     {
+      "format": "text",
+      "publishable": false,
+      "reason": "draft generation disabled"
+    },
+    {
       "format": "question",
-      "language": "ru",
-      "text": "Большинство ИИ‑агентов — сценический реквизит, не ускоритель. Компаундность рождается в цикле: чистые сигналы, стабильный поток метрик и автоматическое исполнение. Что у вас реально компаундила метрики: данные, настройка вознаграждения, исполнение или интерфейс?",
-      "pollOptions": [
-        "Данные",
-        "Настройка вознаграждения",
-        "Инфраструктура исполнения",
-        "Интерфейс"
-      ],
-      "imagePrompt": "Минималистичная иллюстрация: сцена с блестящим чат-ботом как реквизитом, за кулисами — контрольная комната с графиками, потоками данных и трубопроводом метрик; холодная сдержанная палитра, стиль стартап-стенда.",
-      "rationale": "Хук провокационный: ставит под сомнение ценность большинства агентов. Одна конкретная идея — замкнутый цикл данных→метрики→исполнение как источник компаундности. Вопрос призывает к опыту и конкретным компонентам, поэтому варианты опроса соответствуют реальным инженерным блокам. Иллюстрация подчёркивает контраст видимости и инфраструктуры.",
-      "policy": {
-        "passed": true,
-        "hardViolations": [],
-        "reviewFlags": [],
-        "requiresReview": false
-      },
-      "publishable": true
+      "publishable": false,
+      "reason": "draft generation disabled"
+    },
+    {
+      "format": "poll",
+      "publishable": false,
+      "reason": "draft generation disabled"
+    },
+    {
+      "format": "image",
+      "publishable": false,
+      "reason": "draft generation disabled"
+    },
+    {
+      "format": "text",
+      "publishable": false,
+      "reason": "draft generation disabled"
     }
   ],
   "actions": [
     {
-      "type": "question",
-      "id": "18209446180349627"
+      "type": "reply",
+      "replyToId": "18118699279686839",
+      "id": "18086416076644762"
     }
   ],
   "feedback": {
@@ -95,7 +132,7 @@
       {
         "event_type": "bot_post",
         "language": "ru",
-        "count": 1
+        "count": 2
       },
       {
         "event_type": "incoming_reply",
@@ -105,7 +142,7 @@
       {
         "event_type": "incoming_reply",
         "language": "ru",
-        "count": 1
+        "count": 2
       },
       {
         "event_type": "manual_post",
@@ -124,10 +161,10 @@
         "count": 1
       }
     ],
-    "metrics": 3
+    "metrics": 5
   },
   "insights": {
-    "collected": 0,
+    "collected": 2,
     "errors": []
   }
 }
