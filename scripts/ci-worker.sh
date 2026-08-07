@@ -5,7 +5,7 @@ MODE="${1:?mode is required}"
 SLOT="${2:-}"
 
 mkdir -p data
-if git fetch origin bot-state >/dev/null 2>&1; then
+if [[ "${SKIP_STATE_PULL:-0}" != "1" ]] && git fetch origin bot-state >/dev/null 2>&1; then
   git checkout origin/bot-state -- data >/dev/null 2>&1 || true
 fi
 
@@ -24,6 +24,9 @@ case "$MODE" in
     ;;
   health)
     npm run orchestrate:ci -- --ai=false --draft-content=false --max-replies=0 --limit=25
+    ;;
+  persist)
+    :
     ;;
   *)
     echo "Unknown mode: $MODE" >&2

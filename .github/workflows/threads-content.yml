@@ -1,11 +1,6 @@
 name: Threads content publisher
 
 on:
-  schedule:
-    # 12:30, 17:30, 22:30 Asia/Tashkent (UTC+5).
-    - cron: "30 7 * * *"
-    - cron: "30 12 * * *"
-    - cron: "30 17 * * *"
   workflow_dispatch:
     inputs:
       slot:

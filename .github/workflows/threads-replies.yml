@@ -1,9 +1,6 @@
 name: Threads reply monitor
 
 on:
-  schedule:
-    # GitHub cron is UTC; this runs every 30 minutes.
-    - cron: "*/30 * * * *"
   workflow_dispatch:
 
 permissions:
