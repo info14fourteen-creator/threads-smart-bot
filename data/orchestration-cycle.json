@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-07T13:24:42.456Z",
+  "generatedAt": "2026-08-07T13:25:44.972Z",
   "dryRun": false,
   "fetchedPosts": 14,
   "manualPosts": [],
@@ -59,32 +59,32 @@
   ],
   "contentDrafts": [
     {
-      "format": "text",
-      "publishable": false,
-      "reason": "draft generation disabled"
-    },
-    {
       "format": "question",
-      "publishable": false,
-      "reason": "draft generation disabled"
-    },
-    {
-      "format": "poll",
-      "publishable": false,
-      "reason": "draft generation disabled"
-    },
-    {
-      "format": "image",
-      "publishable": false,
-      "reason": "draft generation disabled"
-    },
-    {
-      "format": "text",
-      "publishable": false,
-      "reason": "draft generation disabled"
+      "language": "ru",
+      "text": "Большинство ИИ‑агентов — сценический реквизит, не ускоритель. Компаундность рождается в цикле: чистые сигналы, стабильный поток метрик и автоматическое исполнение. Что у вас реально компаундила метрики: данные, настройка вознаграждения, исполнение или интерфейс?",
+      "pollOptions": [
+        "Данные",
+        "Настройка вознаграждения",
+        "Инфраструктура исполнения",
+        "Интерфейс"
+      ],
+      "imagePrompt": "Минималистичная иллюстрация: сцена с блестящим чат-ботом как реквизитом, за кулисами — контрольная комната с графиками, потоками данных и трубопроводом метрик; холодная сдержанная палитра, стиль стартап-стенда.",
+      "rationale": "Хук провокационный: ставит под сомнение ценность большинства агентов. Одна конкретная идея — замкнутый цикл данных→метрики→исполнение как источник компаундности. Вопрос призывает к опыту и конкретным компонентам, поэтому варианты опроса соответствуют реальным инженерным блокам. Иллюстрация подчёркивает контраст видимости и инфраструктуры.",
+      "policy": {
+        "passed": true,
+        "hardViolations": [],
+        "reviewFlags": [],
+        "requiresReview": false
+      },
+      "publishable": true
     }
   ],
-  "actions": [],
+  "actions": [
+    {
+      "type": "question",
+      "id": "18209446180349627"
+    }
+  ],
   "feedback": {
     "events": [
       {
