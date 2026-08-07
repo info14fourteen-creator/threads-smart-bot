@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-07T11:02:42.322Z",
+  "generatedAt": "2026-08-07T11:53:15.862Z",
   "dryRun": false,
   "fetchedPosts": 14,
   "manualPosts": [],
@@ -127,7 +127,7 @@
     "metrics": 3
   },
   "insights": {
-    "collected": 1,
+    "collected": 0,
     "errors": []
   }
 }
