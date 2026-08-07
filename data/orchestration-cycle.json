@@ -1,72 +1,11 @@
 {
-  "generatedAt": "2026-08-07T01:43:16.878Z",
+  "generatedAt": "2026-08-07T04:29:22.912Z",
   "dryRun": false,
   "fetchedPosts": 12,
   "manualPosts": [],
   "manualDecisions": [],
   "manualFollowUps": [],
-  "replyCandidates": [
-    {
-      "post": {
-        "id": "18136747903591446",
-        "text": "Вайбкодеры!!! Кто то уже выложил приложения в апп стор или гугл плэй? Кто то прошел эти круги ада с IARC, D-U-N-S ???\nЕсли прошли напишите в коммент сколько времени заняло",
-        "username": "fourteentoken",
-        "timestamp": "2026-08-06T10:44:17+0000",
-        "permalink": "https://www.threads.com/@fourteentoken/post/DbshzXaiHOg",
-        "has_replies": true
-      },
-      "reply": {
-        "id": "18349854139218060",
-        "has_replies": true,
-        "permalink": "https://www.threads.com/@victorchernogorov/post/Dbswn67DZwE",
-        "text": "Выкладывай как физлицо и не парься с дансом. \nПриложение VK несколько лет было от физика выложено и ничего :)",
-        "timestamp": "2026-08-06T12:53:48+0000",
-        "username": "victorchernogorov"
-      },
-      "draft": {
-        "action": "reply",
-        "text": "Да, можно выкладывать как физлицо — D‑U‑N‑S требуется только для корпоративного (Organization) аккаунта Apple. Минусы: ваше ФИО/данные будут видны в профиле, сложнее потом переоформить на компанию, и могут быть нюансы с выплатами/налогами — проверьте реквизиты. По IARC: часть магазинов использует IARC для автоматического возрастного рейтинга, но процедуры и требования отличаются у Google и Apple — иногда проще заполнить стандартную анкету в консоли. По времени: регистрация и верификация…",
-        "reason": "Комментарий содержит практический совет/опыт по выкладыванию приложений (конкретный случай), поэтому уместен вежливый ответ с уточнениями и предостережениями.",
-        "language": "ru",
-        "policy": {
-          "passed": true,
-          "hardViolations": [],
-          "reviewFlags": [],
-          "requiresReview": false
-        }
-      }
-    },
-    {
-      "post": {
-        "id": "17996005856804206",
-        "text": "You can only pick ONE.\n\n🟠 Bitcoin\n🔵 Ethereum\n🟣 Solana\n🔴 TRON\n🟡 BNB Chain\n🟢 Base\n⚪ Other\n\nYou also have to eliminate ONE forever.\n\nWhich two did you choose?\n\n👇",
-        "username": "fourteentoken",
-        "timestamp": "2026-08-03T08:16:59+0000",
-        "permalink": "https://www.threads.com/@fourteentoken/post/Dbkij3EiGuK",
-        "has_replies": true
-      },
-      "reply": {
-        "id": "18610233052021467",
-        "has_replies": true,
-        "permalink": "https://www.threads.com/@topmarketview/post/DbklPOGjB9Z",
-        "text": "Bitcoin survives every cycle without a foundation, VC unlock schedule, or single point of failure. That's the keep. Solana still goes dark during real stress. That's the eliminate.",
-        "timestamp": "2026-08-03T08:40:23+0000",
-        "username": "topmarketview"
-      },
-      "draft": {
-        "action": "reply",
-        "text": "Solid take — Bitcoin is the obvious ‘keep’ for sound-money, censorship-resistant reasons. I’d just push back on nuking Solana forever. Its outages are a real, disqualifying pain, but the chain has driven low-fee UX innovation and the team/validators are iterating on fixes. If you truly had to eliminate one chain permanently, I’d sooner axe something with clearer centralization/VC dependence (TRON or BNB Chain) than burn Solana’s performance experiments off the map.",
-        "reason": "Offers a concise disagreement and alternative perspective, highlighting trade-offs and suggesting other chains that might be eliminated instead of Solana.",
-        "language": "en",
-        "policy": {
-          "passed": true,
-          "hardViolations": [],
-          "reviewFlags": [],
-          "requiresReview": false
-        }
-      }
-    }
-  ],
+  "replyCandidates": [],
   "replyErrors": [],
   "contentPlan": [
     {
@@ -145,18 +84,7 @@
       "reason": "draft generation disabled"
     }
   ],
-  "actions": [
-    {
-      "type": "reply",
-      "replyToId": "18349854139218060",
-      "id": "17863540746638132"
-    },
-    {
-      "type": "reply",
-      "replyToId": "18610233052021467",
-      "id": "18219756784333172"
-    }
-  ],
+  "actions": [],
   "feedback": {
     "events": [
       {
