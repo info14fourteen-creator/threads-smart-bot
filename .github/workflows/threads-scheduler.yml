@@ -2,8 +2,8 @@ name: Threads scheduler
 
 on:
   schedule:
-    # One heartbeat for all tasks. The resolver uses Asia/Tashkent and tolerates scheduler delay.
-    - cron: "*/30 * * * *"
+    # One heartbeat for all tasks. Avoid :00/:30 GitHub Actions load peaks.
+    - cron: "7,37 * * * *"
   workflow_dispatch:
     inputs:
       task:
