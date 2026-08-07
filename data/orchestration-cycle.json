@@ -1,115 +1,9 @@
 {
-  "generatedAt": "2026-08-07T08:07:31.284Z",
+  "generatedAt": "2026-08-07T09:38:29.280Z",
   "dryRun": false,
   "fetchedPosts": 14,
-  "manualPosts": [
-    {
-      "id": "18131190286631111",
-      "text": "Кто поймет тот поймет \nМамкины вайбкодеры - вам не понять \nХотя можете у клаудкуколда или шмодекса спросить че это такое",
-      "username": "fourteentoken",
-      "timestamp": "2026-08-07T08:00:50+0000",
-      "permalink": "https://www.threads.com/@fourteentoken/post/Dbuz5AiCCva",
-      "has_replies": false
-    },
-    {
-      "id": "17935499898100550",
-      "text": "Спасибо государству за то, что занимаясь IT можно существенно экономить на налогах",
-      "username": "fourteentoken",
-      "timestamp": "2026-08-07T07:53:21+0000",
-      "permalink": "https://www.threads.com/@fourteentoken/post/DbuzCRKCGDY",
-      "has_replies": false
-    }
-  ],
-  "manualDecisions": [
-    {
-      "id": "18131190286631111",
-      "text": "Кто поймет тот поймет Мамкины вайбкодеры - вам не понять Хотя можете у клаудкуколда или шмодекса спросить че это такое",
-      "username": "fourteentoken",
-      "timestamp": "2026-08-07T08:00:50+0000",
-      "permalink": "https://www.threads.com/@fourteentoken/post/Dbuz5AiCCva",
-      "raw": {
-        "id": "18131190286631111",
-        "text": "Кто поймет тот поймет Мамкины вайбкодеры - вам не понять Хотя можете у клаудкуколда или шмодекса спросить че это такое",
-        "username": "fourteentoken",
-        "timestamp": "2026-08-07T08:00:50+0000",
-        "permalink": "https://www.threads.com/@fourteentoken/post/Dbuz5AiCCva",
-        "raw": {
-          "id": "18131190286631111",
-          "text": "Кто поймет тот поймет \nМамкины вайбкодеры - вам не понять \nХотя можете у клаудкуколда или шмодекса спросить че это такое",
-          "username": "fourteentoken",
-          "timestamp": "2026-08-07T08:00:50+0000",
-          "permalink": "https://www.threads.com/@fourteentoken/post/Dbuz5AiCCva",
-          "has_replies": false
-        }
-      },
-      "hash": "d56bc6df88878297471def1ec8f9bd698f0b5013630e3bcadd4f1c82ba472364",
-      "label": "like",
-      "confidence": 0.84,
-      "relevanceScore": 0.1,
-      "topics": [
-        "vibe_coding"
-      ],
-      "policy": {
-        "passed": true,
-        "hardViolations": [],
-        "reviewFlags": [],
-        "requiresReview": false
-      },
-      "reasons": [
-        "usable_length",
-        "Short, meme-like insider post that fits a casual/vibe-coding community tone.",
-        "Contains mild derogatory language ('вам не понять', 'Мамкины вайбкодеры') but not directed at a protected class or containing severe harassment.",
-        "References other handles as invites to ask, with no requests for private info or prohibited content."
-      ],
-      "aiSafetyFlags": [
-        "mild_insult"
-      ]
-    },
-    {
-      "id": "17935499898100550",
-      "text": "Спасибо государству за то, что занимаясь IT можно существенно экономить на налогах",
-      "username": "fourteentoken",
-      "timestamp": "2026-08-07T07:53:21+0000",
-      "permalink": "https://www.threads.com/@fourteentoken/post/DbuzCRKCGDY",
-      "raw": {
-        "id": "17935499898100550",
-        "text": "Спасибо государству за то, что занимаясь IT можно существенно экономить на налогах",
-        "username": "fourteentoken",
-        "timestamp": "2026-08-07T07:53:21+0000",
-        "permalink": "https://www.threads.com/@fourteentoken/post/DbuzCRKCGDY",
-        "raw": {
-          "id": "17935499898100550",
-          "text": "Спасибо государству за то, что занимаясь IT можно существенно экономить на налогах",
-          "username": "fourteentoken",
-          "timestamp": "2026-08-07T07:53:21+0000",
-          "permalink": "https://www.threads.com/@fourteentoken/post/DbuzCRKCGDY",
-          "has_replies": false
-        }
-      },
-      "hash": "51985119076028da066ad16db514c978c0bc33fd24083a1505ebe339e55f4714",
-      "label": "like",
-      "confidence": 0.86,
-      "relevanceScore": 0.1,
-      "topics": [
-        "vibe_coding"
-      ],
-      "policy": {
-        "passed": true,
-        "hardViolations": [],
-        "reviewFlags": [],
-        "requiresReview": false
-      },
-      "reasons": [
-        "usable_length",
-        "Positive, non-hateful message expressing gratitude about tax advantages for working in IT.",
-        "Content is relevant to the tech/IT community and carries a favorable sentiment likely to engage that audience.",
-        "Does mention government policy but does not contain disallowed content (no threats, hate, sexual content, or requests for sensitive info)."
-      ],
-      "aiSafetyFlags": [
-        "political_content"
-      ]
-    }
-  ],
+  "manualPosts": [],
+  "manualDecisions": [],
   "manualFollowUps": [],
   "replyCandidates": [],
   "replyErrors": [],
@@ -230,10 +124,10 @@
         "count": 1
       }
     ],
-    "metrics": 0
+    "metrics": 2
   },
   "insights": {
-    "collected": 0,
+    "collected": 2,
     "errors": []
   }
 }
