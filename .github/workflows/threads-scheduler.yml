@@ -1,9 +1,10 @@
 name: Threads scheduler
 
 on:
-  schedule:
-    # One heartbeat for all tasks. Avoid :00/:30 GitHub Actions load peaks.
-    - cron: "7,37 * * * *"
+  # Automatic runs paused at the owner's request on 2026-10-13.
+  # schedule:
+  #   # One heartbeat for all tasks. Avoid :00/:30 GitHub Actions load peaks.
+  #   - cron: "7,37 * * * *"
   workflow_dispatch:
     inputs:
       task:
